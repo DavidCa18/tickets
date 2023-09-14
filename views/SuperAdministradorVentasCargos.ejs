@@ -1,0 +1,296 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <input type="text" value="<%= req.session.me.cargo %>" id="cargoUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/SuperAdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-gears"></i>
+                     <span class="nav-label">Gestión</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCliente">
+                           <i class="fa fa-id-badge"></i>Clientes</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasProducto">
+                           <i class="fa fa-shopping-cart"></i>Productos</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasTicket">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTickets">
+                           <i class="fa fa-ticket"></i>Informe Tickets</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTicketsTiempo">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-gears"></i>
+                     <span class="nav-label">Gestión</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCliente">
+                           <i class="fa fa-id-badge"></i>Clientes</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasProducto">
+                           <i class="fa fa-shopping-cart"></i>Productos</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-users"></i>
+                     <span class="nav-label">Usuarios</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li class="active">
+                        <a href="/SuperAdministradorVentasCargos">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasUsuarios">
+                           <i class="fa fa-users"></i>Usuarios</a>
+                     </li>
+                  </ul>
+               </li>
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Usuarios</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Cargos</a>
+                  </li>
+                  <li class="active">
+                     <strong>Gestión Cargos</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Gestión Cargos</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div id="grid"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      $(document).ready(function() {
+
+         dataSource = new kendo.data.DataSource({
+            transport: {
+               read: {
+                  url: "/cargo",
+                  dataType: "json"
+               },
+               update: {
+                  url: "/cargo/update",
+                  dataType: "json"
+               },
+               destroy: {
+                  url: "/cargo/delete",
+                  dataType: "json"
+               },
+               create: {
+                  url: "/cargo/save",
+                  dataType: "json"
+               },
+               parameterMap: function(options, operation) {
+                  if (operation !== "read" && options.models) {
+                     var datos = options.models[0];
+                     return datos;
+                  }
+               }
+            },
+            error: function(e) {
+               toastr.error(JSON.stringify(e), 'Error al realizar la transacción del Cargo');
+               console.log(JSON.stringify(e));
+            },
+            batch: true,
+            pageSize: 10,
+            requestEnd: function(e) {
+               if (e.type != 'read') {
+                  e.sender.read();
+               }
+            },
+            schema: {
+               model: {
+                  id: "idCargo",
+                  fields: {
+                     nombre: {
+                        validation: {
+                           required: true
+                        }
+                     }
+                  }
+               }
+            }
+         });
+
+         $("#grid").kendoGrid({
+            dataSource: dataSource,
+            pageable: {
+               refresh: true,
+               pageSizes: true,
+               buttonCount: 5
+            },
+            height: 400,
+            toolbar: ["create"],
+            columns: [{
+               field: "nombre",
+               title: "Nombre Cargo",
+               width: "90px"
+            }, {
+               command: ["edit", "destroy"],
+               title: "&nbsp;",
+               width: "100px"
+            }],
+            editable: "inline"
+         });
+
+      });
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

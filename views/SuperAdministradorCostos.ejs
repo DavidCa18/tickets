@@ -1,0 +1,429 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Administrador</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuario" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/GloblalPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorInicio" class="active">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorConsultas">
+                     <i class="fa fa-search"></i>
+                     <span class="nav-label">Consultas</span>
+                  </a>
+               </li>
+
+               <li class="active">
+                  <a href="/SuperAdministradorCostos">
+                     <i class="fa fa-money"></i>
+                     <span class="nav-label">Costos</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorReporteMensual">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorReporteTicket">
+                           <i class="fa fa-ticket"></i>Informes Tickets</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-diamond"></i>
+                     <span class="nav-label">Staff</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorCargo">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorUsuarios">
+                           <i class="fa fa-diamond"></i>Staff</a>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Costos</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Costos</a>
+                  </li>
+                  <li class="active">
+                     <strong>Asignación Costos</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+               <div class="title-action">
+
+               </div>
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content">
+
+
+
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="tabs-container">
+                     <ul class="nav nav-tabs">
+                        <li class="active">
+                           <a data-toggle="tab" href="#tab-1"> Lista de Tickets</a>
+                        </li>
+                     </ul>
+                     <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                           <div class="panel-body">
+                              <div class="table-responsive">
+                                 <input type="text" class="form-control" id="filter" placeholder="Buscar por Código Ticket">
+                                 <br>
+                                 <div id="grid"></div>
+                                 <br>
+                                 <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
+                                    <thead>
+                                       <tr>
+                                          <th data-toggle="true" width="15%">Código Ticket</th>
+                                          <th width="55%">Asunto</th>
+                                          <th width="8%">Prioridad</th>
+                                          <th width="15%">Estado</th>
+                                          <th data-hide="all">Creado Por</th>
+                                          <th data-hide="all">Fecha Apertura</th>
+                                          <th data-hide="all">Cliente/s</th>
+                                          <th data-hide="all">Producto</th>
+                                          <th width="2%">Asignar Costos</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tbBodyTickets">
+                                    </tbody>
+                                    <tfoot>
+                                       <tr>
+                                          <td colspan="5">
+                                             <ul class="pagination pull-right"></ul>
+                                          </td>
+                                       </tr>
+                                    </tfoot>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+               <h4 class="modal-title">Asignación de Costos al Ticket</h4>
+            </div>
+            <div class="modal-body">
+
+               <input type="text" class="form-control" id="idTicketC" style="display: none">
+
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label>Codigo Ticket</label>
+                        <input type="text" placeholder="Ingresar Codigo del Ticket" class="form-control" id="codigoC">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label>Total Horas Soporte</label>
+                        <div class="input-group m-b">
+                           <span class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </span>
+                           <input type="text" placeholder="Ingresar Total Horas Soporte" class="form-control" id="horasSoporteC"> </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label>Costo Por Hora <small style="color: red">*Campo Modificable</small> </label>
+
+                        <div class="input-group m-b">
+                           <span class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </span>
+                           <input type="text" placeholder="Ingresar el Costo Total por Hora" class="form-control" id="costoHoraC" value="70">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label>Total Costo del Ticket</label>
+
+                        <div class="input-group m-b">
+                           <span class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </span>
+                           <input type="text" placeholder="Ingresar el Costo Total" class="form-control" id="totalCostoC">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-white" data-dismiss="modal">
+            <i class="fa fa-close"></i> Cancelar</button>
+               <button type="button" class="btn btn-success" id="calcularCostoBtn">
+            <i class="fa fa-calculator"></i> Re - Calcular</button>
+               <button type="button" class="btn btn-primary" id="guardarCostoTotal">
+            <i class="fa fa-save"></i> Guardar</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      buscarTicketsParametros();
+
+      $("#calcularCostoBtn").click(function() {
+         obtenerCostoTotalTicket();
+      });
+
+      $("#guardarCostoTotal").click(function() {
+
+         var costoTotal = $('#totalCostoC').val().length;
+         var idTicket = $('#idTicketC').val().length;
+
+         if (costoTotal > 0 && idTicket > 0) {
+            guardarCostoTotalTicket();
+         } else {
+            toastr.error('Ingrese el costo total y/o el ID del ticket', 'Gestión Costos Ticket');
+         }
+      });
+
+      function buscarTicketsParametros() {
+
+         io.socket.post('/ticket/ticketsParams', {
+            consulta: ' ticket.estado = \'FINALIZADO POR FACTURAR\' '
+         }, function(resData, jwres) {
+
+            console.log('resData', resData)
+
+            if (jwres.statusCode == 201) {
+
+               if (resData.length >= 1) {
+                  var htmlOut = '';
+                  var idUsuarioSesion = $('#idUsuarioSesion').val();
+                  for (var i = 0; i < resData.length; i++) {
+
+                     var fecha = new Date(resData[i].fechaApertura);
+                     var options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric'
+                     };
+                     var prioridad = '';
+
+                     if (resData[i].prioridad == 'ALTA') {
+                        prioridad = 'danger';
+                     } else if (resData[i].prioridad == 'MEDIA') {
+                        prioridad = 'warning';
+                     } else if (resData[i].prioridad == 'BAJA') {
+                        prioridad = 'primary';
+                     }
+
+                     htmlOut += '<tr>' +
+                        '<td>' + resData[i].codigo + '</td>' +
+                        '<td>' + resData[i].asunto + '</td>' +
+                        '<td> <span class="label label-' + prioridad + '">' + resData[i].prioridad + '</span></td>' +
+                        '<td>' + resData[i].estado + '</td>' +
+                        '<td>' + resData[i].creador + '</td>' +
+                        '<td>' + fecha.toLocaleDateString("es-ES", options) + '</td>'
+
+                     +
+                     '<td>' + resData[i].nombreCliente + '</td>' +
+                        '<td><b><u>Marca</u></b> ' + resData[i].marca + "<br><b><u>Modelo</u></b> " + resData[i].modelo + "<br><b><u>Versión</u></b> " + resData[i].version + "<br><b><u>Comentario</u></b> " + resData[i].comentario + '</td>' +
+                        '<td>' +
+                        '<button  type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal6" onclick="informacionTicket(\'' + resData[i].idTicket + '\',\'' + resData[i].codigo + '\',\'' + resData[i].tiempo_total + '\')">' +
+                        '<i class="fa fa-money"></i> Asignar' +
+                        '</button>' +
+                        '</td>' +
+                        '</tr>';
+                  }
+
+                  $('#tbBodyTickets').empty();
+                  $('#tbBodyTickets').append(htmlOut);
+
+                  $('.footable').footable();
+
+               }
+
+            }
+         });
+      }
+
+      function informacionTicket(id, codigo, tiempo_total) {
+
+         $('#idTicketC').val(id);
+         $('#codigoC').val(codigo);
+         $('#horasSoporteC').val(tiempo_total);
+         obtenerCostoTotalTicket();
+      }
+
+      function tranformarTiempoHoras(tiempo) {
+
+         var splitTiempo = tiempo.split(":");
+         var horas = parseInt(splitTiempo[0]);
+         var minutos = parseInt(splitTiempo[1]);
+         var segundos = parseInt(splitTiempo[2]);
+
+         var minutosTranformados = (minutos * 1) / 60;
+         var segundosTranformados = (segundos * 1) / 3600;
+
+         var totalHoras = horas + minutosTranformados + segundosTranformados;
+
+         return totalHoras;
+
+      }
+
+      function obtenerCostoTotalTicket() {
+         var horasSoporteC = $('#horasSoporteC').val();
+         var costoHoraC = $('#costoHoraC').val();
+
+         var horasTotales = tranformarTiempoHoras(horasSoporteC);
+         var costoTotal = (horasTotales * costoHoraC) / 1;
+
+         $('#totalCostoC').val(Math.round(costoTotal * 100) / 100);
+
+      }
+
+      function guardarCostoTotalTicket() {
+
+         var costoTotal = $('#totalCostoC').val();
+         var idTicket_ = $('#idTicketC').val();
+
+         io.socket.post('/ticket/saveCostoTotalTickets', {
+            costo: costoTotal,
+            estado: 'FINALIZADO',
+            idTicket: idTicket_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Costo Asignado Exitosamente al Ticket', 'Gestión Costos Ticket');
+               $('#myModal6').modal('toggle');
+
+               setTimeout(() => {
+                  location.reload();
+               }, 1000);
+
+            } else {
+               toastr.error('Error al Asignar Costos al Ticket', 'Gestión Costos Ticket');
+            }
+         });
+
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>
+      <%=typeof title == 'undefined' ? 'Ticketing Plus' : title%>
+   </title>
+
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+   <link href="css/plugins/bootstrap-multiselect/bootstrap-multiselect.css" rel="stylesheet">
+   <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+
+   <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+   <link href="css/fileupload/fileinput.css" rel="stylesheet">
+   <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+
+   <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+   <link rel="stylesheet" href="styles/kendo.common.min.css" />
+   <!-- <link rel="stylesheet" href="styles/kendo.material.min.css" />
+  <link rel="stylesheet" href="styles/kendo.material.mobile.min.css" /> -->
+   <link rel="stylesheet" href="styles/kendo.silver.min.css" />
+   <link rel="stylesheet" href="styles/kendo.silver.mobile.min.css" />
+
+   <link href="css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+   <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+   <link href="css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+   <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+
+   <link href="css/animate.css" rel="stylesheet">
+   <link href="css/style.css" rel="stylesheet">
+
+
+   <script src="js/jquery-3.1.1.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+   <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+   <script src="js/plugins/footable/footable.all.min.js"></script>
+
+   <script src="js/inspinia.js"></script>
+   <script src="js/plugins/pace/pace.min.js"></script>
+
+   <script src="js/plugins/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+   <script src="js/plugins/summernote/summernote.min.js"></script>
+   <script src="js/fileupload/fileinput.js"></script>
+   <script src="js/plugins/toastr/toastr.min.js"></script>
+
+   <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+   <script src="js/kendo.all.min.js"></script>
+   <script src="js/kendo.messages.es-EC.min.js"></script>
+
+   <script src="js/jquery-printme.js"></script>
+   <script src="js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
+   <script src="js/plugins/clockpicker/clockpicker.js"></script>
+   <script src="js/plugins/dataTables/datatables.min.js"></script>
+   <script src="js/plugins/chartJs/Chart.min.js"></script>
+
+   <script src='js/excelexportjs.js'></script>
+
+   <script type="text/javascript" src="/js/dependencies/sails.io.js"></script>
+
+   <script type="text/javascript" src="js/moment.min.js"></script>
+
+   <script>
+      (function($) {
+         $.get = function(key) {
+            key = key.replace(/[\[]/, '\\[');
+            key = key.replace(/[\]]/, '\\]');
+            var pattern = "[\\?&]" + key + "=([^&#]*)";
+            var regex = new RegExp(pattern);
+            var url = unescape(window.location.href);
+            var results = regex.exec(url);
+            if (results === null) {
+               return null;
+            } else {
+               return results[1];
+            }
+         }
+      })(jQuery);
+   </script>
+</head>
+
+<body class="skin-2">
+   <%- body %>
+</body>
+
+
+
+
+</html>

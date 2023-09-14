@@ -1,0 +1,598 @@
+<% if (req.session.me) { %>
+   <link href="css/reportes.css" rel="stylesheet">
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <input type="text" value="<%= req.session.me.cargo %>" id="cargoUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/AdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/AdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/AdministradorVentasRegistro">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <%
+          var cargos = req.session.me.cargo;
+          var  validacion = cargos.match(/VENDEDOR/g);
+          if (validacion == 'VENDEDOR') {
+
+            %>
+                  <li class="active">
+                     <a href="">
+                        <i class="fa fa-file"></i>
+                        <span class="nav-label">Reportes</span>
+                        <span class="fa arrow"></span>
+                     </a>
+                     <ul class="nav nav-second-level collapse">
+                        <li>
+                           <a href="/AdministradorVentasReportesTickets">
+                              <i class="fa fa-ticket"></i>Informe Tickets</a>
+                        </li>
+                        <li class="active">
+                           <a href="/AdministradorVentasReportesTicketsTiempo">
+                              <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <% } %>
+
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Reportes</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="">Reportes</a>
+                  </li>
+                  <li class="active">
+                     <strong>Reportes por Fecha</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Reportes por Fecha |
+                           <small>El siguiente módulo le permitirá obtener un reporte global de los tickets realizados en el periodo de tiempo
+                    seleccionado.
+                  </small>
+                        </h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+
+                           <div class="col-md-3">
+                              <div class="form-group" id="data_5">
+                                 <label>Rango Fecha
+                        <small style="color: red">&nbsp;&nbsp;&nbsp;&nbsp;* Obligatorio</small>
+                      </label>
+                                 <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start" id="fechaApertura" placeholder="Fecha Apertura" style="height: 35px">
+                                    <span class="input-group-addon">Hasta</span>
+                                    <input type="text" class="input-sm form-control" name="end" id="fechaCierre" placeholder="Fecha Cierre" style="height: 35px">
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label>Cliente</label>
+                                 <select id="cliente" class="form-control">
+                      </select>
+                              </div>
+                           </div>
+
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label>Estado Ticket</label>
+                                 <select id="estado" class="form-control">
+                        <option value="0">NINGUN ESTADO</option>
+                        <option value="VENTA PENDIENTE">VENTA PENDIENTE</option>
+                        <option value="VENTA NO CONCRETADA">VENTA NO CONCRETADA</option>
+                        <option value="VENTA CONCRETADA">VENTA CONCRETADA</option>
+                      </select>
+                              </div>
+                           </div>
+
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label>Usuarios</label>
+                                 <select id="usuarios" class="form-control"></select>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-md-3">
+                              <div class="form-group">
+                                 <label>&nbsp;</label>
+                                 <br>
+                                 <button type="submit" class="btn btn-success" id="btnBuscar" style="width: 100%">
+                        <i class="fa fa-file"></i> Reporte por Fecha</button>
+                              </div>
+                           </div>
+                        </div>
+
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Tickets</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <button class="btn btn-default" id="imprimirReporte">
+                                  <i class="fa fa-print"></i>
+                                  <b>Imprimir</b>
+                                </button>
+                                                <button class="btn btn-info" id="exportarReporte">
+                                  <i class="fa fa-file-excel-o"></i>
+                                  <b>Excel</b>
+                                </button>
+                                             </div>
+                                          </div>
+                                          <br>
+                                          <div id="reporteTicket" class="hide">
+                                             <table id="tbReporte" class="global" cellspacing="4" cellpadding="4" border="0" style="width: 100%">
+                                                <tbody>
+                                                   <tr>
+                                                      <td colspan="6" align="center">
+                                                         <img src="images/logo_cineto.png" alt="CINETO TELECOMUNICACIONES S.A.">
+                                                         <hr>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6" align="center">
+                                                         <h2 style="font-weight: bold;" id="mesSR"></h2>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6">
+                                                         <br>
+                                                         <u>
+                                        <b>DETALLES TICKET</b>
+                                      </u>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6">
+                                                         <table class="table" cellspacing="4" cellpadding="4" border="1" style="width: 100%">
+                                                            <thead>
+                                                               <tr>
+                                                                  <td>
+                                                                     <b>Código</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Estado</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Cliente</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Producto</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Fecha Apertura</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Fecha Cierre</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Tiempo Total</b>
+                                                                  </td>
+                                                                  <td>
+                                                                     <b>Costo</b>
+                                                                  </td>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody id="bodyReporteMensual">
+
+                                                            </tbody>
+                                                         </table>
+                                                      </td>
+                                                   </tr>
+
+                                                   <tr>
+                                                      <td colspan="6">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="6">
+
+                                                         <table class="table" border="1" width="100%" cellspacing="4" cellpadding="4" style="text-align: center">
+                                                            <thead>
+                                                               <tr>
+                                                                  <th style="text-align: center">ESTADO</th>
+                                                                  <th style="text-align: center">N° TOTAL DE TICKET POR ESTADO</th>
+                                                                  <th style="text-align: center">TOTAL DE TICKETS POR ESTADO</th>
+                                                               </tr>
+                                                            </thead>
+                                                            <tbody id="bodyReporteMensualResumen">
+
+                                                            </tbody>
+                                                         </table>
+
+                                                      </td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                          </div>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div id="dvjson"></div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      var data = [];
+
+      $('#estado').multiselect('destroy');
+      $('#estado').multiselect({
+         includeSelectAllOption: true,
+         enableFiltering: true,
+         buttonWidth: '100%',
+         maxHeight: 280
+      });
+
+      $('#data_5 .input-daterange').datepicker({
+         format: 'yyyy-mm-dd',
+         keyboardNavigation: false,
+         forceParse: false,
+         autoclose: true
+      });
+
+      $("#btnBuscar").click(function() {
+
+         var fechaApertura = $('#fechaApertura').val();
+         var fechaCierre = $('#fechaCierre').val();
+         if (fechaApertura.length == '' || fechaCierre.length == '') {
+            toastr.error('Seleccione el Rango de fecha', 'Gestión Reporte');
+         } else {
+            data = [];
+            buscarTicketsMensual();
+         }
+
+      });
+
+      buscarClientesTickets();
+      buscarUsuariosTicket();
+
+      function buscarClientesTickets() {
+         io.socket.get('/cliente_venta', function(resData, jwres) {
+
+            if (jwres.statusCode == 200) {
+               var htmlOut = '<option value="0">NINGUN CLIENTE</option>';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut += '<option value="' + resData[i].idClienteVenta + '">' + resData[i].empresa + '</option>';
+               }
+
+               $('#cliente').empty();
+               $('#cliente').append(htmlOut);
+
+               $('#cliente').multiselect('destroy');
+               $('#cliente').multiselect({
+                  includeSelectAllOption: true,
+                  enableFiltering: true,
+                  buttonWidth: '100%',
+                  maxHeight: 280
+               });
+            }
+         });
+      }
+
+      function buscarUsuariosTicket() {
+         io.socket.get('/usuario', function(resData, jwres) {
+
+            if (jwres.statusCode == 200) {
+               var htmlOut = '<option value="0">NINGUN USUARIO</option>';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut += '<option value="' + resData[i].idUsuario + '">' + resData[i].nombre + '</option>';
+               }
+
+               $('#usuarios').empty();
+               $('#usuarios').append(htmlOut);
+
+               $('#usuarios').multiselect('destroy');
+               $('#usuarios').multiselect({
+                  includeSelectAllOption: true,
+                  enableFiltering: true,
+                  buttonWidth: '100%',
+                  maxHeight: 280
+               });
+            }
+         });
+      }
+
+      function buscarTicketsMensual() {
+         var consulta = '';
+         var options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+         };
+
+         var fechaApertura = $('#fechaApertura').val();
+         var fechaCierre = $('#fechaCierre').val();
+         var cliente = $('#cliente').val();
+         var estado = $('#estado').val();
+         var usuario = $('#usuarios').val();
+
+         if (estado != 0) {
+            consulta += ('ticket_venta.estado = \'' + estado + '\' AND ');
+         }
+
+         if (cliente != 0) {
+            consulta += (
+               '(SELECT ' +
+               'GROUP_CONCAT( cliente_venta.idClienteVenta ) ' +
+               'FROM ' +
+               'cliente_ticket_venta ' +
+               'INNER JOIN cliente_venta ON cliente_ticket_venta.idClienteVenta = cliente_venta.idClienteVenta ' +
+               'WHERE ' +
+               'cliente_ticket_venta.idTicketVenta = ticket_venta.idTicketVenta ' +
+               ') LIKE \'%' + cliente + '%\' AND ');
+         }
+
+         if (usuario != 0) {
+            consulta += (
+               '(SELECT ' +
+               'GROUP_CONCAT( usuario.idUsuario ) ' +
+               'FROM ' +
+               'usuario_ticket_venta ' +
+               'INNER JOIN usuario ON usuario_ticket_venta.idUsuario = usuario.idUsuario ' +
+               'WHERE ' +
+               'usuario_ticket_venta.idTicketVenta = ticket_venta.idTicketVenta ' +
+               ') LIKE \'%' + usuario + '%\' AND ');
+         }
+
+         consulta += ('DATE(ticket_venta.fechaApertura) >= \'' + fechaApertura + '\' && DATE(ticket_venta.fechaCierre) <= \'' + fechaCierre + '\' AND ');
+
+         //console.log((consulta.substr(0, (consulta.length - 4))));
+
+         io.socket.post('/ticket_venta/searchTicketVentasTiempo', {
+            sql: (consulta.substr(0, (consulta.length - 4)))
+         }, function(resData, jwres) {
+            var htmlOut = '';
+            if (jwres.statusCode == 201) {
+
+               var duracionVenta = '';
+
+               $("#reporteTicket").removeClass("hide");
+               $('#mesSR').empty();
+               $('#bodyReporteMensual').empty();
+
+               for (var i = 0; i < resData.length; i++) {
+
+                  var fechaAperturaValidacion = new Date(resData[i].fechaApertura);
+                  var fechaCierreValidacion = new Date(resData[i].fechaCierre);
+                  var fechaCierre;
+                  var costo;
+
+                  if (resData[i].duracionVenta != null) {
+                     duracionVenta = resData[i].duracionVenta;
+                  } else {
+                     duracionVenta = ''
+                  }
+
+                  if (fechaCierreValidacion.toLocaleDateString("es-ES", options) == fechaAperturaValidacion.toLocaleDateString("es-ES", options)) {
+                     fechaCierre = '';
+                  } else {
+                     fechaCierre = fechaCierreValidacion.toLocaleDateString("es-ES", options);
+                  }
+
+                  if (resData[i].costo != null) {
+                     costo = '$ ' + resData[i].costo;
+                  } else {
+                     costo = '';
+                  }
+
+                  htmlOut += '<tr>' +
+                     '<td>' + resData[i].codigo + '</td>' +
+                     '<td>' + resData[i].estado + '</td>' +
+                     '<td><b>Empresa: </b>' + resData[i].empresa + ' <br> <b>Cliente: </b>' + resData[i].cliente + '</td>' +
+                     '<td>' + resData[i].producto + '</td>' +
+                     '<td>' + fechaAperturaValidacion.toLocaleDateString("es-ES", options) + '</td>' +
+                     '<td>' + fechaCierre + '</td>' +
+                     '<td>' + duracionVenta + '</td>' +
+                     '<td>' + costo + '</td>' +
+                     '</tr>';
+
+
+               }
+               $('#bodyReporteMensual').html(htmlOut);
+               buscarTicketsMensualResumen((consulta.substr(0, (consulta.length - 4))));
+
+               data = resData;
+            }
+
+         });
+
+      }
+
+      function buscarTicketsMensualResumen(sql_) {
+         io.socket.post('/ticket_venta/reportTicketVentasTiempoSummary', {
+            sql: sql_
+         }, function(resData, jwres) {
+            var htmlOut = '';
+            if (jwres.statusCode == 201) {
+
+               var htmlOut = '';
+
+               for (var i = 0; i < resData.length; i++) {
+
+                  var costoTotal;
+
+                  if (resData[i].costoTicket != null) {
+                     costoTotal = '$ ' + Math.round(resData[i].costoTicket * 100) / 100;
+                  } else {
+                     costoTotal = '$ 0';
+                  }
+
+                  htmlOut +=
+                     '<tr>' +
+                     '<td>' + resData[i].estado + '</td>' +
+                     '<td>' + resData[i].numeroTickets + '</td>' +
+                     '<td>' + costoTotal + '</td>' +
+                     '</tr>';
+               }
+               $('#bodyReporteMensualResumen').empty();
+               $('#bodyReporteMensualResumen').html(htmlOut);
+            }
+
+         });
+      }
+
+      $("#imprimirReporte").click(function() {
+         $("#reporteTicket").printMe({
+            "path": ["font-awesome/css/font-awesome.css", "css/bootstrap.css", "css/style.css", "css/reportes.css"]
+         });
+      });
+
+
+      $("#exportarReporte").click(function() {
+         $("#dvjson").excelexportjs({
+            containerid: "dvjson",
+            datatype: 'json',
+            dataset: data,
+            columns: getColumns(data)
+         });
+      });
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

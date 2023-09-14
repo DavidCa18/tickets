@@ -1,0 +1,706 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuario" style="display: none">
+                      <input type="text" value="<%= req.session.me.nombre %>" id="nombreUsuario" style="display: none">
+                      <input type="text" value="<%= req.session.me.correo %>" id="correoUsuario" style="display: none">
+                      <input type="text" value="<%= req.session.me.cargo %>" id="cargoUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/AdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/AdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li class="active">
+                        <a href="/AdministradorVentasRegistro">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <%
+          var cargos = req.session.me.cargo;
+          var  validacion = cargos.match(/VENDEDOR/g);
+          if (validacion == 'VENDEDOR') {
+
+            %>
+                  <li>
+                     <a href="">
+                        <i class="fa fa-file"></i>
+                        <span class="nav-label">Reportes</span>
+                        <span class="fa arrow"></span>
+                     </a>
+                     <ul class="nav nav-second-level collapse">
+                        <li>
+                           <a href="/AdministradorVentasReportesTickets">
+                              <i class="fa fa-ticket"></i>Informe Tickets</a>
+                        </li>
+                        <li>
+                           <a href="/AdministradorVentasReportesTicketsTiempo">
+                              <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <% } %>
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Ticket Venta</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Ticket</a>
+                  </li>
+                  <li class="active">
+                     <strong>Registro</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Ticket</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Registro Ticket</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <h3>
+                                                   <u>
+                                    <b>Ticket</b>
+                                  </u>
+                                                </h3>
+                                             </div>
+                                             <div class="col-md-4">
+                                                <div class="form-group">
+                                                   <label>Código Ticket</label>
+                                                   <input type="text" placeholder="Autogenerable Código Ticket" class="form-control" id="codigoTicket" style="display: none">
+                                                   <label class="form-control" id="codigoVisibleVenta">00000000</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-8">
+                                                <div class="form-group">
+                                                   <label>Asunto</label>
+                                                   <input type="text" placeholder="Ingresar Asunto" class="form-control" id="asuntoTicket">
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <h3>
+                                                   <u>
+                                    <b>Cliente</b>
+                                  </u>
+                                                </h3>
+                                             </div>
+                                          </div>
+
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <div class="alert alert-info">
+                                                      Si el cliente que desea registrar ya existe se desplagará como opción de selección en los campos repectivos además se completará automaticamente el correo electrónico y el número de teléfono.
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <div class="row" id="clienteNuevo" style="display: block">
+                                             <div class="col-md-3">
+                                                <div class="form-group">
+                                                   <label>Empresa Cliente</label>
+                                                   <input id="empresaClienteA" class="form-control" style="width: 100%;" placeholder="Ingresar Empresa Cliente" />
+                                                </div>
+                                             </div>
+
+                                             <div class="col-md-3">
+                                                <div class="form-group">
+                                                   <label>Nombre Cliente </label>
+                                                   <input id="nombreClienteA" class="form-control" style="width: 100%;" placeholder="Ingresar Nombre Cliente" />
+                                                </div>
+                                             </div>
+                                             <div class="col-md-3">
+                                                <div class="form-group">
+                                                   <label>Teléfono Cliente</label>
+                                                   <input type="text" placeholder="Ingresar Número Telefónico del Cliente" class="form-control" id="telefonoCliente">
+                                                </div>
+                                             </div>
+                                             <div class="col-md-3">
+                                                <div class="form-group">
+                                                   <label>Correo Electrónico</label>
+                                                   <input type="email" placeholder="Ingresar Correo Electrónico del Cliente" class="form-control" id="correoCliente">
+                                                </div>
+                                             </div>
+
+                                          </div>
+
+                                          <div class="row" id="clienteExistente" style="display: none">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Lista de Clientes Registrados</label>
+                                                   <select class="form-control" id="clienteExistenteCombo">
+                                  </select>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <h3>
+                                                   <u>
+                                    <b>Producto</b>
+                                  </u>
+                                                </h3>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Nombre</label>
+                                                   <input type="text" placeholder="Ingresar Nombre del Producto" class="form-control" id="nombreProducto">
+                                                </div>
+                                             </div>
+                                             <br>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Seguimiento</label>
+                                                   <br>
+                                                   <span class="label label-warning">Tener en cuenta que copiar y pegar texto desde una fuente aparte del sistema podrá afectar
+                                    al mismo y no realizar el guardado del seguimiento.</span>
+                                                   <textarea id="descripcionSeguimiento"></textarea>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <button class="btn btn-primary" id="guardarTicketVenta">
+                                    <i class="fa fa-save"></i> Guardar Ticket</button>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      $('#descripcionSeguimiento').summernote({
+         toolbar: [
+            ['style'],
+            ['fontStyle', ['fontname', 'fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['picture', 'table']],
+         ],
+         fontNames: ['Arial Narrow'],
+         height: 300
+      });
+
+
+      generarCodigoTicket();
+      buscarEmpresaClientesTicket();
+
+      $("#guardarTicketVenta").click(function() {
+         if (validarCampos()) {
+            guardarProducto();
+         }
+      });
+
+      $("#pruebas").click(function() {
+         var empresa = $("#empresaClienteA").val();
+         var cliente = $("#nombreClienteA").val();
+
+         var validacionCliente = $.isNumeric(cliente);
+         console.log(validacionCliente);
+
+      });
+
+
+      function buscarEmpresaClientesTicket() {
+         $("#empresaClienteA").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/ticket_venta/searchClientesTicket",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "empresa",
+            dataValueField: "empresa",
+            placeholder: "Ingresar Empresa",
+            minLength: 1,
+            change: function(e) {
+               var value = this.value();
+
+               buscarNombreClientesTicket(value);
+            }
+         });
+      }
+
+      function buscarNombreClientesTicket(empresa) {
+         $("#nombreClienteA").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/ticket_venta/searchNombreClientesTicket?empresa=" + empresa + "",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "nombre",
+            dataValueField: "idClienteVenta",
+            placeholder: "Ingresar Nombre Cliente",
+            minLength: 1,
+            change: function(e) {
+               var value = this.value();
+
+               buscardatosClienteTicket(value);
+            }
+         });
+      }
+
+      function buscardatosClienteTicket(idClienteVenta_) {
+
+         io.socket.post('/ticket_venta/searchDatosClientesTicket', {
+            idClienteVenta: idClienteVenta_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201 && resData != undefined) {
+               $('#correoCliente').val(resData.correo);
+               $('#telefonoCliente').val(resData.telefono);
+            } else {
+               // toastr.error('Error al Buscar Información del Cliente Ticket', 'Gestión Ticket');
+               $('#correoCliente').val('');
+               $('#telefonoCliente').val('');
+            }
+         });
+      }
+
+      function guardarTicket(idProductoVenta_) {
+
+         var cliente = $("#nombreClienteA").val();
+         var validacionCliente = $.isNumeric(cliente);
+
+         var fecha = new Date();
+
+         var codigoTicket = $('#codigoTicket').val();
+         var asuntoTicket = $('#asuntoTicket').val().toUpperCase();
+         var fechaApertura = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+         var estado = 'VENTA PENDIENTE';
+         var idUsuario = $('#idUsuario').val();
+         var nombreUsuario = $('#nombreUsuario').val();
+
+         var cadena = $('#cargoUsuarioSesion').val();
+
+         io.socket.post('/ticket_venta', {
+            codigo: codigoTicket,
+            asunto: asuntoTicket,
+            fechaApertura: fechaApertura,
+            fechaCierre: fechaApertura,
+            duracionVentaTiempo: '0',
+            estado: estado,
+            idUsuario: idUsuario,
+            nombreUsuario: nombreUsuario,
+            idProductoVenta: idProductoVenta_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Ticket Guardado Exitosamente', 'Gestión Ticket');
+
+               var pat = /VENDEDOR/;
+
+               if (pat.test(cadena) == true) {
+                  guardarUsuarioTicketVenta(resData.idTicketVenta);
+               }
+
+               if (validacionCliente == false) {
+                  guardarCliente(resData.idTicketVenta);
+               } else if (validacionCliente == true) {
+                  guardarClienteTicketVenta(resData.idTicketVenta, cliente);
+               }
+
+               guardarSeguimiento(resData.idTicketVenta);
+
+            } else {
+               toastr.error('Error al Guardar Ticket', 'Gestión Ticket');
+            }
+         });
+
+      }
+
+      function guardarUsuarioTicketVenta(idTicket_) {
+
+         var idUsuario = $('#idUsuario').val();
+
+         io.socket.post('/usuario_ticket_venta', {
+            idUsuario: idUsuario,
+            idTicketVenta: idTicket_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Usuario Ticket Venta Guardado Exitosamente', 'Gestión Ticket');
+            } else {
+               toastr.error('Error al Guardar Usuario Ticket Venta', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function guardarCliente(idTicket_) {
+
+         var empresaCliente = $("#empresaClienteA").val();
+         var nombreCliente = $("#nombreClienteA").val();
+
+         var correoCliente = $('#correoCliente').val();
+         var telefonoCliente = $('#telefonoCliente').val();
+
+
+         io.socket.post('/cliente_venta', {
+            empresa: empresaCliente,
+            nombre: nombreCliente,
+            correo: correoCliente,
+            telefono: telefonoCliente
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Cliente Guardado Exitosamente', 'Gestión Ticket');
+               guardarClienteTicketVenta(idTicket_, resData.idClienteVenta);
+            } else {
+               toastr.error('Error al Guardar Cliente', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function guardarClienteTicketVenta(idTicket_, idCliente_) {
+
+         io.socket.post('/cliente_ticket_venta', {
+            idClienteVenta: idCliente_,
+            idTicketVenta: idTicket_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Cliente Ticket Venta Guardado Exitosamente', 'Gestión Ticket');
+            } else {
+               toastr.error('Error al Guardar Cliente Ticket Venta', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function guardarProducto() {
+         var nombreProducto = $('#nombreProducto').val().toUpperCase();
+
+         io.socket.post('/producto_venta', {
+            nombre: nombreProducto
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Producto Guardado Exitosamente', 'Gestión Ticket');
+               guardarTicket(resData.idProductoVenta);
+            } else {
+               toastr.error('Error al Guardar Producto', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function guardarSeguimiento(idTicketVenta_) {
+
+         var fecha = new Date();
+
+         var fechaApertura = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+         var idUsuario = $('#idUsuario').val();
+         var nombreUsuario = $('#nombreUsuario').val();
+         var descripcionSeguimiento = $('#descripcionSeguimiento').val();
+
+         io.socket.post('/incidencias_venta', {
+            fecha: fechaApertura,
+            descripcion: descripcionSeguimiento,
+            idUsuario: idUsuario,
+            nombreUsuario: nombreUsuario,
+            idTicketVenta: idTicketVenta_
+         }, function(resData, jwRes) {
+            if (jwRes.statusCode == 201) {
+               toastr.success('Seguimiento Guardado Exitosamente', 'Gestión Ticket');
+               enviarEmailAperturaTicketVentas(idTicketVenta_);
+               limpiarCampos();
+               generarCodigoTicket();
+
+            } else {
+               toastr.error('Error al Guardar Seguimiento', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function generarCodigoTicket() {
+
+         var fecha = new Date();
+         var anio = fecha.getFullYear();
+         var mes = (fecha.getMonth() + 1);
+         if (mes.toString().length == 1) {
+            mes = "0" + mes;
+         }
+         var dia = fecha.getDate();
+         if (dia.toString().length == 1) {
+            dia = "0" + dia;
+         }
+
+         io.socket.get('/ticket_venta/ultimoCodigo', function(resData, jwres) {
+
+            if (jwres.statusCode == 200) {
+
+               if (resData.toString().length == 1) {
+                  resData = "0" + resData;
+               }
+
+               $('#codigoTicket').val("COT-CIN-" + anio + "" + mes + "" + resData);
+
+               $('#codigoVisibleVenta').empty();
+               $('#codigoVisibleVenta').html("COT-CIN-" + anio + "" + mes + "" + resData);
+            }
+
+         });
+      }
+
+
+      function enviarEmailAperturaTicketVentas(ticketVenta) {
+
+         var cadena = $('#cargoUsuarioSesion').val();
+         var pat = /VENDEDOR/;
+
+         if (pat.test(cadena) == true) {
+
+            io.socket.post('/incidencias_venta/searchEmailTicketVentaSeguimiento', {
+               idTicketVenta: ticketVenta
+            }, function(resData, jwRes) {
+
+               if (jwRes.statusCode == 201) {
+
+                  $.post("/ticket_venta/sendEmailTicketVenta", {
+                     fechaApertura: resData.fechaApertura,
+                     codigo: resData.codigo,
+                     asunto: resData.asunto,
+                     correos: resData.correo + ',' + resData.usuarioAsigandos
+                  }, function(resData, jwRes) {
+
+                     toastr.success('Correo Electrónico Enviado Exitosamente', 'Gestión Correo Electrónico Inicio Ticket Ventas');
+                  }).fail(function(xhr, ajaxOptions, thrownError) {
+                     toastr.error('Error al Enviar Correo Electrónico', 'Gestión Correo Electrónico Inicio Ticket Ventas');
+                  });
+               } else {
+                  toastr.error('Error al Buscar Datos para el Email Seguimiento', 'Gestión Seguimiento');
+               }
+
+            });
+
+         } else {
+
+            io.socket.post('/incidencias_venta/searchEmailTicketVentaSeguimiento', {
+               idTicketVenta: ticketVenta
+            }, function(resData, jwRes) {
+
+               if (jwRes.statusCode == 201) {
+
+                  $.post("/ticket_venta/sendEmailTicketVenta", {
+                     fechaApertura: resData.fechaApertura,
+                     codigo: resData.codigo,
+                     asunto: resData.asunto,
+                     correos: resData.correo + ',' + resData.usuarios
+                  }, function(resData, jwRes) {
+
+                     toastr.success('Correo Electrónico Enviado Exitosamente', 'Gestión Correo Electrónico Inicio Ticket Ventas');
+                  }).fail(function(xhr, ajaxOptions, thrownError) {
+                     toastr.error('Error al Enviar Correo Electrónico', 'Gestión Correo Electrónico Inicio Ticket Ventas');
+                  });
+               } else {
+                  toastr.error('Error al Buscar Datos para el Email Seguimiento', 'Gestión Seguimiento');
+               }
+
+            });
+
+         }
+
+
+      }
+
+      function validarCampos() {
+
+         var asuntoTicket = $('#asuntoTicket').val().length;
+         var empresaCliente = $('#empresaClienteA').val().length;
+         var nombreCliente = $('#nombreClienteA').val().length;
+         var correoCliente = $('#correoCliente').val().length;
+         var nombreProducto = $('#nombreProducto').val().length;
+         var descripcionSeguimiento = $('#descripcionSeguimiento').val().length;
+         var telefonoCliente = $('#telefonoCliente').val().length;
+
+         if (asuntoTicket > 0) {
+            if (empresaCliente > 0) {
+               if (nombreCliente > 0) {
+                  if (correoCliente > 0) {
+                     if (telefonoCliente > 0) {
+                        if (nombreProducto > 0) {
+                           if (descripcionSeguimiento > 0) {
+                              return true;
+                           } else {
+                              toastr.error('Ingresar Descripción del Seguimiento', 'Gestión Ticket');
+                           }
+                        } else {
+                           toastr.error('Ingresar Nombre del Producto', 'Gestión Ticket');
+                        }
+                     } else {
+                        toastr.error('Ingresar Número Telefónico del Cliente', 'Gestión Ticket');
+                     }
+                  } else {
+                     toastr.error('Ingresar Correo Electrónico del Cliente', 'Gestión Ticket');
+                  }
+               } else {
+                  toastr.error('Ingresar Nombre del Cliente', 'Gestión Ticket');
+               }
+            } else {
+               toastr.error('Ingresar Nombre de la Empresa', 'Gestión Ticket');
+            }
+         } else {
+            toastr.error('Ingresar Asunto', 'Gestión Ticket');
+         }
+
+         return false;
+      }
+
+      function limpiarCampos(params) {
+
+         $('#asuntoTicket').val('');
+         $('#empresaCliente').val('');
+         $('#nombreCliente').val('');
+         $('#telefonoCliente').val('');
+         $('#correoCliente').val('');
+         $('#nombreProducto').val('');
+         $('#descripcionProducto').val('');
+         $('#descripcionSeguimiento').summernote('code', '');
+
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

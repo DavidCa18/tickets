@@ -1,0 +1,290 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/AdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/AdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/AdministradorVentasRegistro">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <%
+          var cargos = req.session.me.cargo;
+          var  validacion = cargos.match(/VENDEDOR/g);
+          if (validacion == 'VENDEDOR') {
+
+            %>
+                  <li>
+                     <a href="">
+                        <i class="fa fa-file"></i>
+                        <span class="nav-label">Reportes</span>
+                        <span class="fa arrow"></span>
+                     </a>
+                     <ul class="nav nav-second-level collapse">
+                        <li>
+                           <a href="/AdministradorVentasReportesTickets">
+                              <i class="fa fa-ticket"></i>Informe Tickets</a>
+                        </li>
+                        <li>
+                           <a href="/AdministradorVentasReportesTicketsTiempo">
+                              <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <% } %>
+
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Perfil</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Perfil</a>
+                  </li>
+                  <li class="active">
+                     <strong>Usuario</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Gestión Perfil Usuario</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Datos Personales</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Nombre</label>
+                                                   <input type="text" class="form-control" id="nombre">
+                                                </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Correo Electrónico</label>
+                                                   <input type="text" class="form-control" id="correo">
+                                                </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Contraseña</label>
+                                                   <input type="password" class="form-control" id="password">
+
+                                                   <div class="checkbox checkbox-info">
+                                                      <input id="show" type="checkbox">
+                                                      <label for="show">
+                                      <b>Mostrar Contraseña</b>
+                                    </label>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Rol</label>
+                                                   <p class="form-control" id="rol"></p>
+                                                </div>
+                                             </div>
+
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <button type="submit" class="btn btn-primary" id="btnGuardarPerfil">
+                                    <i class="fa fa-pencil"></i> Actualizar Información</button>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      obtenerDatos();
+
+      $('#show').click(function() {
+         if ($('#show').prop('checked')) {
+            $("#password").attr("type", "text");
+         } else {
+            $("#password").attr("type", "password");
+         }
+      });
+
+      $("#btnGuardarPerfil").click(function() {
+         actualizarDatos();
+         obtenerDatos();
+         setTimeout(() => {
+            location.replace('usuario/logout');
+         }, 1000);
+      });
+
+      function actualizarDatos() {
+
+         var usuario = $.get("user");
+         var nombre = $('#nombre').val();
+         var correo = $('#correo').val();
+         var password = $('#password').val();
+
+         io.socket.post('/usuario/updateProfile', {
+            nombre: nombre,
+            correo: correo,
+            password: password,
+            idUsuario: usuario
+         }, function(resData, jwRes) {
+            console.log(resData);
+            if (jwRes.statusCode == 201) {
+               toastr.success('Datos Actualizados Correctamente.\nSe cerrará su sesión para que surgan los cambios.', 'Gestión Perfil');
+            } else {
+               toastr.error('Error al Actualizar Datos', 'Gestión Perfil');
+            }
+         });
+      }
+
+      function obtenerDatos() {
+         var usuario = $.get("user");
+         io.socket.get('/usuario/' + usuario + '', function(resData, jwRes) {
+
+            if (jwRes.statusCode == 200) {
+
+               $('#nombre').val(resData.nombre);
+               $('#correo').val(resData.correo);
+               $('#password').val(resData.password);
+
+               $('#rol').empty(resData.rol);
+               $('#rol').html(resData.rol);
+            } else {
+               toastr.error('Error al Obtener Datos', 'Gestión Perfil');
+            }
+         });
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

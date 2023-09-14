@@ -1,0 +1,645 @@
+<% if (req.session.me) { %>
+   <link href="css/reportes.css" rel="stylesheet">
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/SuperAdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasTicket">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li class="active">
+                        <a href="/SuperAdministradorVentasReportesTickets">
+                           <i class="fa fa-ticket"></i>Informe Tickets</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTicketsTiempo">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-gears"></i>
+                     <span class="nav-label">Gestión</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCliente">
+                           <i class="fa fa-id-badge"></i>Clientes</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasProducto">
+                           <i class="fa fa-shopping-cart"></i>Productos</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-users"></i>
+                     <span class="nav-label">Usuarios</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCargos">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasUsuarios">
+                           <i class="fa fa-users"></i>Usuarios</a>
+                     </li>
+                  </ul>
+               </li>
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Reportes</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="">Reportes</a>
+                  </li>
+                  <li class="active">
+                     <strong>Informe Ticket</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Informe Ticket |
+                           <small>El siguiente módulo le permitirá realizar un reporte del informe del ticket perteneciente a un staff.</small>
+                        </h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label>Usuarios
+                        <small style="color: red">&nbsp;&nbsp;&nbsp;&nbsp;* Obligatorio</small>
+                      </label>
+                                 <select id="usuarios" class="form-control"></select>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label>Códigos
+                        <small style="color: red">&nbsp;&nbsp;&nbsp;&nbsp;* Obligatorio</small>
+                      </label>
+                                 <select id="codigo" class="form-control"></select>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-group">
+                                 <label>&nbsp;</label>
+                                 <br>
+                                 <button type="submit" class="btn btn-info" id="btnBuscarReporte" style="width: 100%">
+                        <i class="fa fa-file"></i> Reporte</button>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Ticket</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+
+                                          <button class="btn btn-default" id="imprimirReporte">
+                              <i class="fa fa-print"></i> Imprimir</button>
+                                          <br>
+
+                                          <div id="reporteTicket" class="hide">
+                                             <table class="global" cellspacing="4" cellpadding="4" border="0" style="width: 100%">
+                                                <tbody>
+                                                   <tr>
+                                                      <td colspan="2" align="center">
+                                                         <img src="images/logo_cineto.png" alt="CINETO TELECOMUNICACIONES S.A.">
+                                                      </td>
+                                                      <td colspan="2">
+                                                         <div>
+                                                            <p>
+                                                               <strong>Cineto Telecomunicaciones S.A.</strong>
+                                                               <br />La Pinta 236 y Rábida. Quito Ecuador, Edficio Alcatel
+                                                               <br /> (1800) 123 123
+                                                               <strong>Email</strong>: info@cineto.net
+                                                            </p>
+                                                         </div>
+                                                      </td>
+
+                                                   </tr>
+                                                   <hr>
+                                                   <tr>
+                                                      <td colspan="4">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4" align="right">
+                                                         <h3 style="font-weight: bold;" id="codigoNumero"></h3>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Asunto:</b>
+                                                      </td>
+                                                      <td id="asuntoSR"></td>
+                                                      <td align="right">
+                                                         <b>Estado:</b>
+                                                      </td>
+                                                      <td id="estadoSR" align="right"></td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">
+                                                         <br>
+                                                         <u>
+                                        <b>TICKET</b>
+                                      </u>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Emitido Por:</b>
+                                                      </td>
+                                                      <td id="creadorSR"></td>
+                                                      <td align="right">
+                                                         <b>Fecha Apertura: </b>
+                                                      </td>
+                                                      <td id="fechaAperturaSR" align="right"></td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>N° Ticket: </b>
+                                                      </td>
+                                                      <td id="codigoSR"></td>
+                                                      <td align="right">
+                                                         <b>Fecha Cierre:</b>
+                                                      </td>
+                                                      <td id="fechaCierreSR" align="right"></td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Usuario/s
+                                        <br> Involucrado/s:</b>
+                                                      </td>
+                                                      <td id="staffSR"></td>
+                                                      <td align="right">
+                                                         <b>Duración Venta:</b>
+                                                      </td>
+                                                      <td id="tiempoTotalSR" align="right"></td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">
+                                                         <br>
+                                                         <u>
+                                        <b>CLIENTE</b>
+                                      </u>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Empresa:</b>
+                                                      </td>
+                                                      <td id="empresaClienteSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Nombre/s:</b>
+                                                      </td>
+                                                      <td id="nombreClientesSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Teléfono:</b>
+                                                      </td>
+                                                      <td id="telefonoClientesSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Correo Electrónico:</b>
+                                                      </td>
+                                                      <td id="correoClientesSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">
+                                                         <br>
+                                                         <u>
+                                        <b>PRODUCTO</b>
+                                      </u>
+                                                      </td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Nombre:</b>
+                                                      </td>
+                                                      <td id="nombreProductoSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Costo Total:</b>
+                                                      </td>
+                                                      <td id="costoSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>
+                                                         <b>Descripción Venta:</b>
+                                                      </td>
+                                                      <td id="descripcionSR"></td>
+                                                      <td>&nbsp;</td>
+                                                      <td>&nbsp;</td>
+                                                   </tr>
+
+                                                   <tr>
+                                                      <td colspan="4">&nbsp;</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td colspan="4">
+                                                         <h3 style="font-weight: bold;">Seguimiento Ticket</h3>
+                                                      </td>
+                                                   </tr>
+
+                                                   <tr>
+                                                      <td colspan="4">
+                                                         <br>
+                                                         <div id="incidenciaSR">
+
+
+
+                                                         </div>
+                                                      </td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                          </div>
+
+
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      buscarUsuariosTicket();
+
+      $("#btnBuscarReporte").click(function() {
+
+         var usuario = $('#usuarios').val();
+         var ticket = $('#codigo').val();
+
+         if (usuario == null || ticket == null) {
+            toastr.error('Seleccionar un Staff y/o un Código del Ticket', 'Gestión Incidencia');
+         } else {
+            $("#reporteTicket").removeClass("hide");
+            buscarReporteTicketVenta(ticket);
+         }
+
+      });
+
+
+      function buscarUsuariosTicket() {
+         io.socket.get('/usuario', function(resData, jwres) {
+
+            if (jwres.statusCode == 200) {
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut += '<option value="' + resData[i].idUsuario + '">' + resData[i].nombre + '</option>';
+               }
+
+               $('#usuarios').empty();
+               $('#usuarios').append(htmlOut);
+
+               $('#usuarios').multiselect('destroy');
+               $('#usuarios').multiselect({
+                  includeSelectAllOption: true,
+                  enableFiltering: true,
+                  buttonWidth: '100%',
+                  maxHeight: 280,
+                  onChange: function(paraoption, checked, selectms) {
+                     var usuario = $("#usuarios").val();
+                     buscarCodigosTicket(usuario);
+                  }
+               });
+            }
+         });
+      }
+
+      function buscarCodigosTicket(value) {
+
+         io.socket.get("/ticket_venta/searchCodigosTicketParametros?idUsuario=" + value + "", function(resData, jwres) {
+
+            if (jwres.statusCode == 201) {
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut += '<option value="' + resData[i].idTicketVenta + '">' + resData[i].codigo + '</option>';
+               }
+
+               $('#codigo').empty();
+               $('#codigo').append(htmlOut);
+
+               $('#codigo').multiselect('destroy');
+               $('#codigo').multiselect({
+                  includeSelectAllOption: true,
+                  enableFiltering: true,
+                  buttonWidth: '100%',
+                  maxHeight: 280
+               });
+            }
+         });
+      }
+
+      function buscarReporteTicketVenta(ticket_venta_) {
+
+         io.socket.post('/ticket_venta/searchTicketVentaDocumentos', {
+            idTicketVenta: ticket_venta_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var options = {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+               };
+               var fechaAperturaValidacion = new Date(resData.fechaApertura);
+               var fechaCierreValidacion = new Date(resData.fechaCierre);
+               var fechaApertura;
+               var fechaCierre;
+               var totalVenta = 'Sin Cerrar';
+               var costo = 'Sin Costo';
+
+               if (fechaAperturaValidacion.toLocaleDateString("es-ES", options) == '31 de diciembre de 1969 19:00:00') {
+                  fechaApertura = '';
+               } else {
+                  fechaApertura = fechaAperturaValidacion.toLocaleDateString("es-ES", options);
+               }
+
+               if (fechaCierreValidacion.toLocaleDateString("es-ES", options) == fechaAperturaValidacion.toLocaleDateString("es-ES", options)) {
+                  fechaCierre = 'Sin Cerrar';
+               } else {
+                  fechaCierre = fechaCierreValidacion.toLocaleDateString("es-ES", options);
+               }
+
+               if (resData.duracionVenta != null) {
+                  totalVenta = resData.duracionVenta;
+               }
+
+               if (resData.costo != null) {
+                  costo = resData.costo;
+               }
+
+               $('#codigoNumero').empty();
+               $('#codigoNumero').append(resData.codigo);
+
+               $('#asuntoSR').empty();
+               $('#asuntoSR').append(resData.asunto);
+
+               $('#estadoSR').empty();
+               $('#estadoSR').append(resData.estado);
+
+               $('#creadorSR').empty();
+               $('#creadorSR').append(resData.nombreUsuario);
+
+               $('#codigoSR').empty();
+               $('#codigoSR').append(resData.codigo);
+
+               $('#staffSR').empty();
+               $('#staffSR').append(resData.usuarios);
+
+               $('#fechaAperturaSR').empty();
+               $('#fechaAperturaSR').append(fechaApertura);
+
+               $('#fechaCierreSR').empty();
+               $('#fechaCierreSR').append(fechaCierre);
+
+               $('#tiempoTotalSR').empty();
+               $('#tiempoTotalSR').append(totalVenta);
+
+               $('#empresaClienteSR').empty();
+               $('#empresaClienteSR').append(resData.empresaCliente);
+
+               $('#nombreClientesSR').empty();
+               $('#nombreClientesSR').append(resData.nombreCliente);
+
+               $('#telefonoClientesSR').empty();
+               $('#telefonoClientesSR').append(resData.telefonoCliente);
+
+               $('#correoClientesSR').empty();
+               $('#correoClientesSR').append(resData.correoCliente);
+
+               $('#nombreProductoSR').empty();
+               $('#nombreProductoSR').append(resData.nombreProducto);
+
+               $('#descripcionProductoSR').empty();
+               $('#descripcionProductoSR').append(resData.descripcionProducto);
+
+               $('#costoSR').empty();
+               $('#costoSR').append(costo);
+
+               $('#descripcionSR').empty();
+               $('#descripcionSR').append(resData.descripcion);
+
+               io.socket.get('/incidencias_venta?idTicketVenta=' + ticket_venta_ + '', function(resData, jwRes) {
+                  if (jwRes.statusCode == 200) {
+                     var htmlIncidencia = '';
+                     for (var i = 0; i < resData.length; i++) {
+
+                        var fecha = new Date(resData[i].fecha);
+
+                        htmlIncidencia += '<div class="col-md-12">' +
+                           '<table border="0">' +
+                           '<tr>' +
+                           '<td>' +
+                           '<dt>Responsable Incidencia:&nbsp;</dt>' +
+                           '</td>' +
+                           '<td >&nbsp;&nbsp;&nbsp;' + resData[i].nombreUsuario + '</td>' +
+                           '</tr>' +
+                           '<tr>' +
+                           '<td>' +
+                           '<dt>Inicio Incidencia:&nbsp;</dt>' +
+                           '</td>' +
+                           '<td>&nbsp;&nbsp;&nbsp;' + fecha.toLocaleDateString("es-ES", options) + '</td>' +
+                           '</tr>' +
+                           '<tr>' +
+                           '<td colspan="2">&nbsp;</td>' +
+                           '</tr>' +
+                           '</table>' +
+                           '<div class="well" style="font-size: 14px">' +
+                           '<div style="width: 100%">' + resData[i].descripcion + '</div>' +
+                           '</div><hr>' +
+                           '</div>';
+                     }
+
+                     $('#incidenciaSR').empty();
+                     $('#incidenciaSR').append(htmlIncidencia);
+                  } else {
+                     toastr.error('Error al buscar el detalle del seguimiento del ticket', 'Gestión Búsqueda Ticket Venta');
+                  }
+               });
+
+            } else {
+               toastr.error('Error al buscar el detalle del ticket', 'Gestión Búsqueda Ticket Venta');
+            }
+         });
+      }
+
+      $("#imprimirReporte").click(function() {
+         $("#reporteTicket").printMe({
+            "path": ["font-awesome/css/font-awesome.css", "css/bootstrap.css", "css/style.css", "css/reportes.css"]
+         });
+      });
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

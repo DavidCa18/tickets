@@ -1,0 +1,451 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuario" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/GloblalPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li class="active">
+                  <a href="/AdministradorInicio" class="active">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-id-badge"></i>
+                     <span class="nav-label">Clientes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/AdministradorClienteEmpresa">
+                           <i class="fa fa-bank"></i>Empresas</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorClienteTrabajador">
+                           <i class="fa fa-id-card-o"></i>Contactos</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="/AdministradorProducto">
+                     <i class="fa fa-shopping-cart"></i>
+                     <span class="nav-label">Productos</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Tickets</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/AdministradorTicketRegistrar">
+                           <i class="fa fa-save"></i>Nuevo Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorTicketIncidencias">
+                           <i class="fa fa-th-list"></i>Incidencias</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorTicketBusquedas">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="/AdministradorReporteTicket">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Informe Ticket</span>
+                  </a>
+               </li>
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Inicio</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Inicio</a>
+                  </li>
+                  <li class="active">
+                     <strong>Resumen</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+               <div class="title-action">
+                  <a href="/AdministradorTicketRegistrar" class="btn btn-success">Crear Ticket</a>
+               </div>
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content">
+            <div class="row">
+               <div class="col-lg-4">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Mis Tickets Vigentes</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content ibox-heading" style="background: white">
+                        <h3>
+                           <i class="fa fa-ticket"></i> Tickets Vigentes</h3>
+                        <small id="totalMisTicketsPendientes">
+                  <i class="fa fa-tim"></i>Usted tiene un total del 0 tickets vigentes</small>
+                     </div>
+                     <div class="ibox-content" style="background: white">
+                        <div class="feed-activity-list" id="misTicketsPendientes">
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="col-lg-4">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Mis Tickets Finalizados Por Facturar</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content ibox-heading" style="background: white">
+                        <h3 style="color: #FF5555">
+                           <i class="fa fa-ticket"></i> Tickets Finalizados Por Facturar</h3>
+                        <small id="totalMisTicketsNoConcretados">
+                  <i class="fa fa-tim"></i>Usted tiene un total del 0 tickets finalizados por facturar</small>
+                     </div>
+                     <div class="ibox-content" style="background: white">
+                        <div class="feed-activity-list" id="misTicketsNoConcretados">
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="col-lg-4">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Mis Tickets Finalizados</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content ibox-heading" style="background: white">
+                        <h3 style="color: #1AB394">
+                           <i class="fa fa-ticket"></i> Tickets Finalizados</h3>
+                        <small id="totalMisTicketsConcretados">
+                  <i class="fa fa-tim"></i>Usted tiene un total del 0 tickets finalizados</small>
+                     </div>
+                     <div class="ibox-content" style="background: white">
+                        <div class="feed-activity-list" id="misTicketsConcretados">
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+
+
+            <!-- <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Gráfico Estado de Tickets</h5>
+                        <div class="pull-right">
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="ibox-content" style="position: relative">
+                                 <canvas id="lineChart" height="100"></canvas>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div> -->
+
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      buscarTicketsUsuario();
+      buscarListaTicketsEstadoPorUsuarios('rgba(26,179,148,0.2)', "rgba(26,179,148,0.7)", "rgba(7,161,130,1)", "00A080");
+
+      function buscarTicketsUsuario() {
+
+         var usuario = $('#idUsuario').val();
+         var options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+         };
+
+         io.socket.post('/ticket/searchTicketsPertenecientesUsuario', {
+            usuario: usuario,
+            estado: 'VIGENTE'
+         }, function(resData, jwRes) {
+            console.log(resData);
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  var fechaApertura = moment(resData[i].fechaApertura).format("YYYY-MM-DD LTS");
+
+                  htmlOut +=
+                     '<div class="feed-element">' +
+                     '<a href="/AdministradorTicketIncidenciasDetalle?ticket=' + resData[i].idTicket + '&idUsuarioSesion=' + resData[i].idUsuario + '" style="text-decoration:none; color: black">' +
+                     '<small class="pull-right"></small>' +
+                     '<strong>N° ' + resData[i].codigo + '</strong>' +
+                     '<div>' + resData[i].asunto + '</div>' +
+                     '<small class="text-muted">Fecha Apertura: ' + fechaApertura.toString() + '</small>' +
+                     '</a>' +
+                     '</div>';
+
+               }
+
+               $('#misTicketsPendientes').empty();
+               $('#misTicketsPendientes').append(htmlOut);
+               $('#misTicketsPendientes').slimScroll({
+                  height: '278px'
+               });
+               $('#totalMisTicketsPendientes').empty();
+               $('#totalMisTicketsPendientes').append('<i class="fa fa-tim"></i>Usted tiene un total de ' + resData.length + ' tickets vigentes');
+
+            } else {
+               toastr.error('Error al buscar detalle de tickets por usuario', 'Gestión Inicio Tickets');
+            }
+         });
+
+         io.socket.post('/ticket/searchTicketsPertenecientesUsuario', {
+            usuario: usuario,
+            estado: 'FINALIZADO POR FACTURAR'
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  var fechaApertura = moment(resData[i].fechaApertura).format("YYYY-MM-DD LTS");
+
+                  htmlOut +=
+                     '<div class="feed-element">' +
+                     '<a href="/AdministradorTicketIncidenciasDetalle?ticket=' + resData[i].idTicket + '&idUsuarioSesion=' + resData[i].idUsuario + '" style="text-decoration:none; color: black">' +
+                     '<small class="pull-right"></small>' +
+                     '<strong>N° ' + resData[i].codigo + '</strong>' +
+                     '<div>' + resData[i].asunto + '</div>' +
+                     '<small class="text-muted">Fecha Apertura: ' + fechaApertura.toString() + '</small>' +
+                     '</a>' +
+                     '</div>';
+
+               }
+
+               $('#misTicketsNoConcretados').empty();
+               $('#misTicketsNoConcretados').append(htmlOut);
+               $('#misTicketsNoConcretados').slimScroll({
+                  height: '250px'
+               });
+               $('#totalMisTicketsNoConcretados').empty();
+               $('#totalMisTicketsNoConcretados').append('<i class="fa fa-tim"></i>Usted tiene un total de ' + resData.length + ' tickets finalizados por facturar');
+
+            } else {
+               toastr.error('Error al buscar detalle de tickets por usuario', 'Gestión Inicio Tickets');
+            }
+         });
+
+         io.socket.post('/ticket/searchTicketsPertenecientesUsuario', {
+            usuario: usuario,
+            estado: 'FINALIZADO'
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  var fechaApertura = moment(resData[i].fechaApertura).format("YYYY-MM-DD LTS");
+
+                  htmlOut +=
+                     '<div class="feed-element">' +
+                     '<a href="/AdministradorTicketIncidenciasDetalle?ticket=' + resData[i].idTicket + '&idUsuarioSesion=' + resData[i].idUsuario + '" style="text-decoration:none; color: black">' +
+                     '<small class="pull-right"></small>' +
+                     '<strong>N° ' + resData[i].codigo + '</strong>' +
+                     '<div>' + resData[i].asunto + '</div>' +
+                     '<small class="text-muted">Fecha Apertura: ' + fechaApertura.toString() + '</small>' +
+                     '</a>' +
+                     '</div>';
+
+               }
+
+               $('#misTicketsConcretados').empty();
+               $('#misTicketsConcretados').append(htmlOut);
+               $('#misTicketsConcretados').slimScroll({
+                  height: '278px'
+               });
+               $('#totalMisTicketsConcretados').empty();
+               $('#totalMisTicketsConcretados').append('<i class="fa fa-tim"></i>Usted tiene un total de ' + resData.length + ' tickets finalizados  ');
+
+            } else {
+               toastr.error('Error al buscar detalle de tickets por usuario', 'Gestión Inicio Tickets');
+            }
+         });
+      }
+
+
+      function buscarListaTicketsEstadoPorUsuarios(backgroundColor_, borderColor_, pointBackgroundColor_, pointBorderColor_) {
+
+         var usuario = $('#idUsuario').val();
+
+         io.socket.post('/ticket/searchListaTicketsEstadoPorUsuarios', {
+            idUsuario: usuario
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var labels = [];
+               var data = [];
+
+               for (var i = 0; i < resData.length; i++) {
+                  labels.push(resData[i].estado);
+                  data.push(resData[i].numero);
+               }
+
+               var lineData = {
+                  labels: labels,
+                  datasets: [
+
+                     {
+                        label: "GRÁFICO DE TICKETS POR ESTADO",
+                        backgroundColor: '' + backgroundColor_ + '',
+                        borderColor: "" + borderColor_ + "",
+                        pointBackgroundColor: "" + pointBackgroundColor_ + "",
+                        pointBorderColor: "#" + pointBorderColor_ + "",
+                        data: data
+                     }
+                  ]
+               };
+
+               var lineOptions = {
+                  responsive: true
+               };
+
+               var myNewChart1;
+
+               if (window.myNewChart1 != null) {
+                  window.myNewChart1.destroy();
+               }
+
+               var ctx = document.getElementById("lineChart").getContext("2d");
+               window.myNewChart1 = new Chart(ctx, {
+                  type: 'line',
+                  data: lineData,
+                  options: lineOptions
+               });
+
+
+            } else {
+               toastr.error('Error al buscar gráfico numero de tickets', 'Gestión Inicio Tickets');
+            }
+         });
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

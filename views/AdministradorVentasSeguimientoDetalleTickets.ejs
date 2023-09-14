@@ -1,0 +1,687 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="idNombreUsuario" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/AdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/AdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/AdministradorVentasRegistro">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li class="active">
+                        <a href="/AdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/AdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <%
+          var cargos = req.session.me.cargo;
+          var  validacion = cargos.match(/VENDEDOR/g);
+          if (validacion == 'VENDEDOR') {
+
+            %>
+                  <li>
+                     <a href="">
+                        <i class="fa fa-file"></i>
+                        <span class="nav-label">Reportes</span>
+                        <span class="fa arrow"></span>
+                     </a>
+                     <ul class="nav nav-second-level collapse">
+                        <li>
+                           <a href="/AdministradorVentasReportesTickets">
+                              <i class="fa fa-ticket"></i>Informe Tickets</a>
+                        </li>
+                        <li>
+                           <a href="/AdministradorVentasReportesTicketsTiempo">
+                              <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                        </li>
+                     </ul>
+                  </li>
+
+                  <% } %>
+
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Ticket Venta</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Ticket</a>
+                  </li>
+                  <li class="active">
+                     <strong>Seguimiento Detalle</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="ibox collapsed">
+                     <div class="ibox-title" style="background: white">
+                        <div id="detalleTicket">
+                           <h5>Ticket Pendiente de Seguimiento&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <small>Expandir para ver detalles</small>
+                           </h5>
+                        </div>
+                        <div class="ibox-tools">
+                           <a class="" id="aperturaTicket" style="color: black">
+                              <i class="fa fa-clock-o"></i>
+                           </a>
+                           <a class="" id="estadoTicket" style="color: black">
+                              <i class="fa fa-cogs"></i>
+                           </a>
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-6 col-sm-12">
+                              <h5>Usuarios Atendiendo el Ticket</h5>
+                              <ol class="dd-list" id="usuariosAsignadosTicket">
+                              </ol>
+                           </div>
+                           <div class="col-md-6 col-sm-12">
+                              <h5>Clientes Pertenecientes al Ticket</h5>
+                              <ol class="dd-list" id="clientesAsignadosTicket">
+                              </ol>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="alert alert-danger" id="panel1" style="display: none">
+               <b>El ticket seleccionado se encuentra finalizado, no podrá realizar el seguimiento.</b>
+            </div>
+
+            <div class="row" id="panel2" style="display: none">
+               <div class="col-lg-12">
+                  <div class="ibox collapsed">
+                     <div class="ibox-title">
+                        <h5>Registrar Seguimiento&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <small>Expandir para registrar seguimiento</small>
+                        </h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <button class="btn btn-info">
+                      <i class="fa fa-chevron-up"></i> Agregar Seguimiento</button>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Registrar Seguimiento</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+                                          <div class="row">
+                                             <div class="col-md-12" style="display: none">
+                                                <div class="form-group">
+                                                   <label>Ticket Asignado</label>
+                                                   <input type="text" placeholder="Ticket Asignado" class="form-control" id="idTicketSeguimiento" style="display: none">
+                                                   <label class="form-control" id="idTicketSeguimientoVisible">00000000</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Usuario</label>
+                                                   <input type="text" placeholder="Ticket Asignado" class="form-control" id="idUsuarioSeguimiento" style="display: none">
+                                                   <label class="form-control" id="idNombreSeguimiento">00000000</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <label>Descripción</label>
+                                                   <br>
+                                                   <span class="label label-warning">Tener en cuenta que copiar y pegar texto desde una fuente aparte del sistema podrá afectar
+                                    al mismo y no realizar el guardado del seguimiento.</span>
+                                                   <textarea id="descripcionSeguimiento"></textarea>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <button class="btn btn-primary" id="guardarSeguimiento">
+                                    <i class="fa fa-save"></i> Guardar Seguimiento</button>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Lista de Seguimientos | </h5>
+                        <span class="label label-success" id="numeroTicket"> 0 </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="ultimoRegistro">
+
+                </span>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+
+                        <div id="SeguimientoDetalles">
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <div class="modal inmodal fade" id="mdArchivos" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+               <h4 class="modal-title">Asignar Archivos a la Incidencia</h4>
+            </div>
+            <div class="modal-body">
+               <form id="fmrGuardarArchivo" enctype="multipart/form-data" action="/archivo_ventas/guardarArchivo" method="post">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="form-group">
+                           <label>Incidencia Asignada</label>
+                           <input type="text" placeholder="Incidencia Asignada" class="form-control" name="idIncidencia" id="idIncidencia" style="display: none">
+                           <label class="form-control" id="idIncidenciaVisible">00000000</label>
+
+                        </div>
+                     </div>
+                  </div>
+                  <input type="text" name="idModulo" id="idModulo" style="display: none">
+                  <div class="row">
+                     <div class="col-md-12 ">
+                        <div class="form-group">
+                           <div class="">
+                              <label>Adjuntar Archivos</label>
+                              <input id="archivo" name="archivo" type="file" class="file" data-show-preview="false" data-show-upload="false" multiple>
+
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+            </div>
+            <div class="modal-footer">
+
+               <button type="submit" class="btn btn-primary" id="btnAdjuntar" style="width: 100%">
+            <i class="fa fa-save"></i> Guardar Archivos</button>
+               <br>
+               <br>
+               <button type="button" class="btn btn-white" data-dismiss="modal" style="width: 100%">Cancelar</button>
+            </div>
+            </form>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      var ticketVenta = $.get("ticketVenta");
+      var idUsuario = $.get("idUsuario");
+      var descripcionIncidencia = '';
+      $('#idModulo').val('AdministradorVentasSeguimientoDetalleTickets?ticketVenta=' + ticketVenta + '&idUsuario=' + idUsuario + '');
+
+      $('#idTicketSeguimiento').val(ticketVenta);
+      $('#idTicketSeguimientoVisible').html(ticketVenta);
+
+      $('#idUsuarioSeguimiento').val($('#idUsuarioSesion').val());
+      $('#idNombreSeguimiento').html($('#idNombreUsuario').val());
+
+      $('#descripcionSeguimiento').summernote({
+         toolbar: [
+            ['style'],
+            ['fontStyle', ['fontname', 'fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['picture', 'table']],
+         ],
+         fontNames: ['Arial Narrow'],
+         height: 300
+      });
+
+      $("#guardarSeguimiento").click(function() {
+         var descripcionIncidencia = $('#descripcionSeguimiento').val().length;
+         if (descripcionIncidencia > 0) {
+            guardarSeguimiento();
+         } else {
+            toastr.error('Ingresar Descripción del Seguimiento', 'Gestión Seguimiento');
+         }
+
+      });
+
+      buscarSeguimientos();
+
+      function guardarSeguimiento() {
+
+         var fecha = new Date();
+
+         var nombreUsuario = $('#idNombreUsuario').val();
+         var descripcionIncidencia = $('#descripcionSeguimiento').val();
+         var fechaActual = fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+
+         io.socket.post('/incidencias_venta', {
+            fecha: fechaActual,
+            descripcion: descripcionIncidencia,
+            idUsuario: idUsuario,
+            nombreUsuario: nombreUsuario,
+            idTicketVenta: ticketVenta
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Seguimiento Guardada Exitosamente', 'Gestión Seguimiento');
+               $('#descripcionSeguimiento').summernote('code', '');
+
+               io.socket.post('/incidencias_venta/searchEmailTicketVentaSeguimiento', {
+                  idTicketVenta: ticketVenta
+               }, function(resData, jwRes) {
+
+                  if (jwRes.statusCode == 201) {
+                     enviarEmailSeguimientoTicketVentas(resData.fechaApertura, resData.codigo, resData.asunto, resData.correo + ',' + resData.usuarioAsigandos);
+                  } else {
+                     toastr.error('Error al Buscar Datos para el Email Seguimiento', 'Gestión Seguimiento');
+                  }
+
+               });
+
+               buscarSeguimientos();
+            } else {
+               toastr.error('Error al Guardar Seguimiento', 'Gestión Seguimiento');
+            }
+         });
+      }
+
+      function obtenerArchivos(json) {
+
+         var retorno = '' + json;
+
+         var archivo = JSON.parse(json);
+         var htmlOut = '';
+         for (var i = 0; i < archivo.length; i++) {
+            htmlOut += '<a href="' + archivo[i].ubicacion + '" target="_blank" class="btn btn-default" style="font-size: 14px" ><i class="fa fa-file-archive-o"></i> ' + archivo[i].nombre + '</a>&nbsp;&nbsp;&nbsp;';
+
+         }
+
+         retorno = htmlOut;
+
+         return retorno;
+      }
+
+      function buscarSeguimientos() {
+
+         io.socket.get('/incidencias_venta?idTicketVenta=' + ticketVenta + '&sort=fecha ASC', function(resData, jwRes) {
+
+            if (jwRes.statusCode == 200 && resData.length >= 1) {
+
+               validarUsuarioPertenecientesTicketVenta();
+
+               var htmlOut = '';
+               var numeroSeguimientos = resData.length;
+               var desplegado = 'collapse';
+               var options = {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+               };
+               var fechaApertura = new Date(resData[0].idTicketVenta.fechaApertura);
+               var modificacionIncidencia = '';
+
+               $('#detalleTicket').html('<h5>#' + resData[0].idTicketVenta.codigo + ' | ' + resData[0].idTicketVenta.asunto + ' &nbsp;&nbsp;&nbsp;<small>Expandir para ver detalles</small></h5>');
+               $('#aperturaTicket').html('' + fechaApertura.toLocaleDateString("es-ES", options) + ' <i class="fa fa-clock-o"></i>');
+               $('#estadoTicket').html('<i class="fa fa-s"><span class="label label-success">' + resData[0].idTicketVenta.estado + '</span></i>');
+               $('#numeroTicket').html('# ' + resData.length);
+
+
+               for (var i = 0; i < resData.length; i++) {
+                  var archivos = resData[i].archivos.length;
+
+                  if (resData[i].idTicketVenta.estado == 'VENTA PENDIENTE') {
+                     $("#panel1").css("display", "none");
+                     $("#panel2").css("display", "block");
+                     modificacionIncidencia = 'block';
+                     $('#ultimoRegistro').empty();
+                     $('#ultimoRegistro').html('<a class="anclaUnica" href="#ancla' + numeroSeguimientos + '" data-ancla="ancla' + numeroSeguimientos + '">Ir al último registro</a>');
+                  } else {
+                     $("#panel1").css("display", "block");
+                     $("#panel2").css("display", "none");
+                     modificacionIncidencia = 'none';
+                  }
+                  if (numeroSeguimientos === (i + 1) && resData[0].idTicketVenta.estado == "VENTA PENDIENTE") {
+                     desplegado = 'collapse in';
+                  }
+
+                  var fecha = new Date(resData[i].fecha);
+
+                  htmlOut +=
+                     ' <div class="row">' +
+                     '<div class="col-lg-12">' +
+                     '<div class="ibox">' +
+                     '<div class="ibox-title" style="color: black">' +
+                     '<h5>Seguimiento N# ' + (i + 1) + '| <small>Resposable: ' + resData[i].nombreUsuario + '</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>Expandir para visualizar seguimiento</small></h5>' +
+                     '<div class="ibox-tools">' +
+                     '<a data-toggle="collapse" data-target="#' + resData[i].idIncidenciaVenta + '" style="color: black" name="ancla' + (i + 1) + '" id="ancla' + (i + 1) + '">' +
+                     '<i class="fa fa-chevron-down"></i>' +
+                     '</a>' +
+                     '</div>' +
+                     '</div>' +
+                     '<div class="' + desplegado + ' ibox-content" id="' + resData[i].idIncidenciaVenta + '" style="background: white; color: black">' +
+                     '<div class="row">' +
+                     '<div class="col-md-12">' +
+                     '<div class="form-group">' +
+                     '<label>Responsable del Seguimiento:</label> &nbsp;&nbsp;&nbsp;&nbsp; ' + resData[i].nombreUsuario + '' +
+                     '</div>' +
+                     '</div>' +
+                     '<div class="col-md-12">' +
+                     '<div class="form-group">' +
+                     '<label>Fecha Seguimiento:</label> &nbsp;&nbsp;&nbsp;&nbsp; ' + fecha.toLocaleDateString("es-ES", options) + '<hr>' +
+                     '</div>' +
+                     '</div>' +
+                     '<div class="col-md-12" style="width: 100%">' +
+                     '<div id="label' + resData[i].idIncidenciaVenta + '" class="label label-warning" style="display: none">Asegurese de guardar los cambios para que puedan ser visualizados.</div><div class="' + resData[i].idIncidenciaVenta + '">' + resData[i].descripcion + '</div>' +
+                     '</br><button id="edit" class="btn btn-default" style="float: right; display: ' + modificacionIncidencia + '" onclick="editar(' + resData[i].idIncidenciaVenta + ')"><i class="fa fa-edit"></i></button>' +
+                     '<button id="save" class="btn btn-info" style="float: right; display: ' + modificacionIncidencia + '" onclick="guardar(' + resData[i].idIncidenciaVenta + ')"><i class="fa fa-save"></i></button> <br><br>' +
+                     '<hr><h5 style="font-weight: bold">' + archivos + ' Archivos Adjunto/s</h5> <button class="btn btn-default" style="float: right; display: ' + modificacionIncidencia + '" data-toggle="modal" data-target="#mdArchivos" onclick="asignarIdIncidenciaArchivo(' + resData[i].idIncidenciaVenta + ')"><i class="fa fa-files-o"></i></button> <br> ' +
+                     '' + obtenerArchivos(JSON.stringify(resData[i].archivos)) + '' +
+                     '</div>' +
+                     '</div>' +
+                     '</div>' +
+                     '</div>' +
+                     '</div>' +
+                     '</div>';
+               }
+
+               $('#SeguimientoDetalles').empty();
+               $('#SeguimientoDetalles').append(htmlOut);
+
+               //SI SE NECESITA DESPUES location.href = '/AdministradorVentasSeguimientoDetalleTickets?ticketVenta=' + ticketVenta + '&idUsuario=' + idUsuario + '#ancla' + numeroSeguimientos + '';
+
+            } else {
+               validarUsuarioPertenecientesTicketVenta();
+            }
+         });
+      }
+
+      bucarClientesAsignados();
+      bucarUsuariosAsignados();
+
+      function bucarClientesAsignados() {
+         io.socket.post('/cliente_ticket_venta/searchClientesPertenecientesTicket', {
+            idTicketVenta: ticketVenta
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut +=
+                     '<li class="dd-item">' +
+                     '<div class="dd-handle">' +
+                     '<span class="label label-info">' +
+                     '<i class="fa fa-ticket"></i>' +
+                     '</span> &nbsp;' + resData[i].nombre + '' +
+                     ' </div>' +
+                     '</li>';
+               }
+
+               $('#clientesAsignadosTicket').empty();
+               $('#clientesAsignadosTicket').append(htmlOut);
+
+            } else {
+               toastr.error('Error al Buscar Clientes Asignados al Ticket', 'Gestión Seguimiento');
+            }
+         });
+      }
+
+      function bucarUsuariosAsignados() {
+         io.socket.post('/usuario_ticket_venta/searchUsuarioPertenecientesTicket', {
+            idTicketVenta: ticketVenta
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut +=
+                     '<li class="dd-item">' +
+                     '<div class="dd-handle">' +
+                     '<span class="label label-info">' +
+                     '<i class="fa fa-ticket"></i>' +
+                     '</span> &nbsp;' + resData[i].nombre + '' +
+                     ' </div>' +
+                     '</li>';
+               }
+
+               $('#usuariosAsignadosTicket').empty();
+               $('#usuariosAsignadosTicket').append(htmlOut);
+
+            } else {
+               toastr.error('Error al Buscar Usuarios Asignados al Ticket', 'Gestión Seguimiento');
+            }
+         });
+      }
+
+
+
+      var editar = function(idIncidencia) {
+
+         descripcionIncidencia = '';
+         descripcionIncidencia = $('.' + idIncidencia + '').summernote('code');
+         $('.' + idIncidencia + '').summernote({
+            focus: true,
+            toolbar: [
+               ['style'],
+               ['fontStyle', ['fontname', 'fontsize']],
+               ['color', ['color']],
+               ['para', ['ul', 'ol', 'paragraph']],
+               ['insert', ['picture', 'table']],
+            ],
+            fontNames: ['Arial Narrow'],
+         });
+
+         $("#label" + idIncidencia + "").css("display", "block");
+      };
+
+      var guardar = function(idIncidencia) {
+         var descripcion = $('.' + idIncidencia + '').summernote('code');
+
+         if (descripcionIncidencia == '') {
+            toastr.info('No se modificó la incidencia, editela primero.', 'Gestión Seguimiento');
+            descripcionIncidencia = '';
+         } else if (descripcionIncidencia == descripcion) {
+            toastr.info('Descripción de la Incidencia editada correctamente.', 'Gestión Seguimiento');
+            descripcionIncidencia = '';
+         } else {
+            io.socket.post('/incidencias_venta/updateDescription', {
+               descripcion: descripcion,
+               idIncidenciaVenta: idIncidencia
+            }, function(resData, jwRes) {
+               console.log(resData);
+               if (jwRes.statusCode == 201) {
+                  toastr.success('Descripción de la Incidencia editada correctamente', 'Gestión Seguimiento');
+                  descripcionIncidencia = '';
+               } else {
+                  toastr.error('Error al editar la descripción de la Incidencia', 'Gestión Seguimiento');
+                  descripcionIncidencia = '';
+               }
+            });
+         }
+         $('.' + idIncidencia + '').summernote('destroy');
+         $("#label" + idIncidencia + "").css("display", "none");
+      };
+
+      function asignarIdIncidenciaArchivo(idIncidencia_) {
+         $('#idIncidencia').val(idIncidencia_);
+         $('#idIncidenciaVisible').html(idIncidencia_);
+      }
+
+      function validarUsuarioPertenecientesTicketVenta() {
+         io.socket.post('/usuario/searchValidateUsuariosTicketVenta', {
+            idTicketVenta: ticketVenta,
+            idUsuario: idUsuario
+         }, function(resData, jwres) {
+
+            if (jwres.statusCode == 201) {
+               if (resData == 'false') {
+                  $("#panel2").css("display", "none");
+                  toastr.warning('No pertenece al ticket por lo tanto no podrá realizar el registro de incidencias', 'Gestión Seguimiento');
+               } else {
+                  // $("#panel2").css("display", "block");
+                  toastr.success('Acceso Exitoso a las incidencias del Ticket', 'Gestión Seguimiento');
+               }
+            } else {
+               $("#panel2").css("display", "none");
+               toastr.error('Error al buscar usuarios pertenecientes al ticket', 'Gestión Seguimiento');
+            }
+
+         });
+      }
+
+      function enviarEmailSeguimientoTicketVentas(fechaApertura, codigoTicket, asuntoTicket, correos) {
+
+         $.post("/incidencias_venta/sendEmailTicketVentaSeguimiento", {
+            fechaApertura: fechaApertura,
+            codigo: codigoTicket,
+            asunto: asuntoTicket,
+            correos: correos
+         }, function(resData, jwRes) {
+
+            toastr.success('Correo Electrónico Enviado Exitosamente', 'Gestión Correo Electrónico Seguimiento Ticket Ventas');
+         }).fail(function(xhr, ajaxOptions, thrownError) {
+            toastr.error('Error al Enviar Correo Electrónico', 'Gestión Correo Electrónico Seguimiento Ticket Ventas');
+         });
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

@@ -1,0 +1,609 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <input type="text" value="<%= req.session.me.cargo %>" id="cargoUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/SuperAdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasTicket">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li class="active">
+                        <a href="/SuperAdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTickets">
+                           <i class="fa fa-ticket"></i>Informe Tickets</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTicketsTiempo">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-gears"></i>
+                     <span class="nav-label">Gestión</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCliente">
+                           <i class="fa fa-id-badge"></i>Clientes</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasProducto">
+                           <i class="fa fa-shopping-cart"></i>Productos</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-users"></i>
+                     <span class="nav-label">Usuarios</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCargos">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasUsuarios">
+                           <i class="fa fa-users"></i>Usuarios</a>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Ticket Venta</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Ticket</a>
+                  </li>
+                  <li class="active">
+                     <strong>Seguimiento</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Seguimiento</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1"> Lista de Tickets</a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+                                          <div class="table-responsive">
+                                             <input type="text" class="form-control" id="filter" placeholder="Buscar por Código Ticket">
+                                             <br>
+                                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
+                                                <thead>
+                                                   <tr>
+                                                      <th data-toggle="true" width="15%">Código Ticket</th>
+                                                      <th width="50%">Asunto</th>
+                                                      <th width="10%">Estado</th>
+                                                      <th data-hide="all">Fecha Apertura</th>
+                                                      <th data-hide="all">Fecha Cierre</th>
+                                                      <th data-hide="all">Tiempo de Venta</th>
+                                                      <th data-hide="all">Cliente</th>
+                                                      <th data-hide="all">Producto</th>
+                                                      <th data-hide="all">Usuarios Asignados</th>
+                                                      <th width="2%">Ver Seguimiento</th>
+                                                      <th width="2%">Pertenecer Seguimiento</th>
+                                                      <th width="2%">Finalizar</th>
+                                                   </tr>
+                                                </thead>
+                                                <tbody id="tbBodyTickets">
+
+                                                </tbody>
+                                                <tfoot>
+                                                   <tr>
+                                                      <td colspan="5">
+                                                         <ul class="pagination pull-right"></ul>
+                                                      </td>
+                                                   </tr>
+                                                </tfoot>
+                                             </table>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-md">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+               <h4 class="modal-title">Finalizar Ticket</h4>
+            </div>
+            <div class="modal-body">
+               <div class="row">
+
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        <label>Seleccionar Estado</label>
+                        <select class="form-control" id="estadoTicket">
+                  <option value="1">VENTA CONCRETADA</option>
+                  <option value="2">VENTA NO CONCRETADA</option>
+                </select>
+                     </div>
+                  </div>
+
+                  <div class="col-md-12" style="display: none">
+                     <div class="form-group">
+                        <label>Fecha Apertura del Ticket</label>
+                        <input type="text" id="fechaAperturaTicketFinalizar" class="form-control">
+                     </div>
+                  </div>
+
+                  <input type="text" id="idTicketFinalizar" style="display: none">
+
+                  <div class="col-md-12" id="concretada" style="display: block">
+                     <div class="form-group">
+                        <label>Ingresar Precio</label>
+                        <input type="number" placeholder="Ingresar Precio de la Venta Concretada" class="form-control" id="precioTicket">
+                     </div>
+                  </div>
+                  <div class="col-md-12" id="noConcretada" style="display: block">
+                     <div class="form-group">
+                        <label>Ingresar Comentario</label>
+                        <textarea class="form-control" id="descripcionTicket" rows="5" placeholder="Ingresar la Comentario de la Venta"></textarea>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="modal-footer">
+               <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+               <button type="button" class="btn btn-primary" id="btnFinalizarTicket">Finalizar Ticket</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      buscarTicketSeguimiento();
+
+      $('#estadoTicket').multiselect('destroy');
+      $('#estadoTicket').multiselect({
+         includeSelectAllOption: true,
+         enableFiltering: true,
+         buttonWidth: '100%',
+         maxHeight: 200,
+         onChange: function(element, checked) {
+            var estadoTicket = $('#estadoTicket').val();
+            if (estadoTicket == '1') {
+               $("#concretada").css("display", "block");
+               $("#noConcretada").css("display", "block");
+            } else if (estadoTicket == '2') {
+               $("#concretada").css("display", "none");
+               $("#noConcretada").css("display", "block");
+            }
+         }
+      });
+
+
+      $("#btnFinalizarTicket").click(function() {
+
+         var idTicketFinalizar = $('#idTicketFinalizar').val().length;
+         var precioTicket = $('#precioTicket').val().length;
+         var descripcionTicket = $('#descripcionTicket').val().length;
+
+         var estadoTicket = $('#estadoTicket').val();
+         if (estadoTicket == '1') {
+
+            if (idTicketFinalizar > 0) {
+               if (precioTicket > 0) {
+                  if (descripcionTicket > 0) {
+                     guardarVentaConcretada();
+                  } else {
+                     toastr.error('Ingresar el comentario', 'Gestión Ticket');
+                  }
+               } else {
+                  toastr.error('Ingresar el Costo', 'Gestión Ticket');
+               }
+            } else {
+               toastr.error('No existe el Codigo del Ticket', 'Gestión Ticket');
+            }
+
+         } else if (estadoTicket == '2') {
+
+            if (idTicketFinalizar > 0) {
+               if (descripcionTicket > 0) {
+                  guardarVentaNoConcretada();
+               } else {
+                  toastr.error('Ingresar el comentario', 'Gestión Ticket');
+               }
+            } else {
+               toastr.error('No existe el Codigo del Ticket', 'Gestión Ticket');
+            }
+
+         }
+
+      });
+
+      function guardarVentaConcretada() {
+
+         var fechaAperturaDate = new Date($('#fechaAperturaTicketFinalizar').val());
+         var fechaCierreDate = new Date();
+
+         var idTicketFinalizar = $('#idTicketFinalizar').val();
+         var precioTicket = $('#precioTicket').val();
+         var descripcionTicket = $('#descripcionTicket').val();
+
+         var fechaApertura = fechaAperturaDate.getFullYear() + "-" + (fechaAperturaDate.getMonth() + 1) + "-" + fechaAperturaDate.getDate() + " " + fechaAperturaDate.getHours() + ":" + fechaAperturaDate.getMinutes() + ":" + fechaAperturaDate.getSeconds();
+         var fechaCierre = fechaCierreDate.getFullYear() + "-" + (fechaCierreDate.getMonth() + 1) + "-" + fechaCierreDate.getDate() + " " + fechaCierreDate.getHours() + ":" + fechaCierreDate.getMinutes() + ":" + fechaCierreDate.getSeconds();
+
+         var duracionVenta = (calcularFechaFinalEnFormatoHora(calcularFechaFinalEnSegundos(fechaApertura, fechaCierre)));
+
+         io.socket.post('/ticket_venta/updateTicketvendido', {
+            descripcion: descripcionTicket,
+            costo: precioTicket,
+            fechaCierre: fechaCierre,
+            duracionVenta: duracionVenta,
+            duracionVentaTiempo: calcularFechaFinalEnSegundos(fechaApertura, fechaCierre),
+            idTicketVenta: idTicketFinalizar
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.success('Venta Concretada', 'Gestión Ticket');
+               $('#myModal5').modal('toggle');
+               setTimeout(() => {
+                  location.reload();
+               }, 1000);
+            } else {
+               toastr.error('Error al Guardar Venta Concretada', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function guardarVentaNoConcretada() {
+
+         var fechaAperturaDate = new Date($('#fechaAperturaTicketFinalizar').val());
+         var fechaCierreDate = new Date();
+
+         var idTicketFinalizar = $('#idTicketFinalizar').val();
+         var descripcionTicket = $('#descripcionTicket').val();
+
+         var fechaApertura = fechaAperturaDate.getFullYear() + "-" + (fechaAperturaDate.getMonth() + 1) + "-" + fechaAperturaDate.getDate() + " " + fechaAperturaDate.getHours() + ":" + fechaAperturaDate.getMinutes() + ":" + fechaAperturaDate.getSeconds();
+         var fechaCierre = fechaCierreDate.getFullYear() + "-" + (fechaCierreDate.getMonth() + 1) + "-" + fechaCierreDate.getDate() + " " + fechaCierreDate.getHours() + ":" + fechaCierreDate.getMinutes() + ":" + fechaCierreDate.getSeconds();
+
+         var duracionVenta = (calcularFechaFinalEnFormatoHora(calcularFechaFinalEnSegundos(fechaApertura, fechaCierre)));
+
+         io.socket.post('/ticket_venta/updateTicketNoVendido', {
+            descripcion: descripcionTicket,
+            fechaCierre: fechaCierre,
+            duracionVenta: duracionVenta,
+            duracionVentaTiempo: calcularFechaFinalEnSegundos(fechaApertura, fechaCierre),
+            idTicketVenta: idTicketFinalizar
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+               toastr.warning('Venta No Concretada', 'Gestión Ticket');
+               $('#myModal5').modal('toggle');
+
+               setTimeout(() => {
+                  location.reload();
+               }, 1000);
+
+            } else {
+               toastr.error('Error al Guardar Venta No Concretada', 'Gestión Ticket');
+            }
+         });
+      }
+
+      function buscarTicketSeguimiento() {
+
+         var idUsuarioSesion = $('#idUsuarioSesion').val();
+
+         io.socket.post('/ticket_venta/searchTicketsSeguimiento', {
+            idUsuario: idUsuarioSesion
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               var options = {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+               };
+               var estado = '';
+               var colorEstado = '';
+               var duracion = '';
+               var usuarios = '';
+
+               for (var i = 0; i < resData.length; i++) {
+
+                  var fechaApertura = new Date(resData[i].fechaApertura);
+                  var fechaCierreVerificar = new Date(resData[i].fechaCierre);
+
+                  if (fechaCierreVerificar.toLocaleDateString("es-ES", options) == fechaApertura.toLocaleDateString("es-ES", options)) {
+                     fechaCierre = 'Sin Cerrar';
+                  } else {
+                     fechaCierre = fechaCierreVerificar.toLocaleDateString("es-ES", options);
+                  }
+
+                  if (resData[i].duracionVenta == null) {
+                     duracion = 'Sin Cerrar';
+                  } else {
+                     duracion = resData[i].duracionVenta;
+                  }
+
+                  if (resData[i].usuarios == null) {
+                     usuarios = 'No Existen Usuarios Asignados';
+                  } else {
+                     usuarios = resData[i].usuarios;
+                  }
+
+                  if (resData[i].estado == 'VENTA PENDIENTE') {
+                     estado = 'block';
+                  } else {
+                     estado = 'none';
+                  }
+
+                  if (resData[i].estado == 'VENTA PENDIENTE') {
+                     colorEstado = 'default';
+                  } else if (resData[i].estado == 'VENTA CONCRETADA') {
+                     colorEstado = 'primary';
+                  } else if (resData[i].estado == 'VENTA NO CONCRETADA') {
+                     colorEstado = 'danger';
+                  }
+
+                  htmlOut +=
+                     '<tr>' +
+                     '<td>' + resData[i].codigo + '</td>' +
+                     '<td>' + resData[i].asunto + '</td>' +
+                     '<td><span class="label label-' + colorEstado + '">' + resData[i].estado + '</span></td>' +
+                     '<td>' + fechaApertura.toLocaleDateString("es-ES", options) + '</td>' +
+                     '<td>' + fechaCierre + '</td>' +
+                     '<td>' + duracion + '</br></br></td>' +
+                     '<td><b><u>Empresa:</u></b> ' + resData[i].empresaCliente + '</br>' +
+                     '<b><u>Nombre:</u></b> ' + resData[i].nombreCliente + '</br>' +
+                     '<b><u>Teléfono:</u></b> ' + resData[i].telefonoCliente + '</br>' +
+                     '<b><u>Email:</u></b> ' + resData[i].correoCliente + '</br></br></td>' +
+                     '<td></b> ' + resData[i].nombreProducto + '</br></br></td>' +
+                     '<td>' + usuarios + '</td>' +
+                     '<td><button class="btn btn-info" onclick="bucarSeguimientos(' + resData[i].idTicketVenta + ')"><i class="fa fa-eye"></i> Seguimientos</button></td>' +
+                     '<td><button style="display: ' + estado + '" class="btn btn-default" onclick="asignarUsuarioSeguimiento(' + resData[i].idTicketVenta + ')"><i class="fa fa-mail-forward"></i> Pertenecer</button></td>' +
+                     '<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal5" style="display: ' + estado + '" onclick="finalizarTicket(\'' + resData[i].idTicketVenta + '\', \'' + resData[i].fechaApertura + '\')"> <i class="fa fa-stop-circle"></i> Finalizar</button></td>' +
+                     '</tr>';
+               }
+               $('#tbBodyTickets').empty();
+               $('#tbBodyTickets').append(htmlOut);
+
+               $('.footable').footable();
+            } else {
+               toastr.error('Error al Cargar Lista de Tickets', 'Gestión Seguimiento');
+            }
+         });
+      }
+
+      function bucarSeguimientos(idTicket_) {
+         var idUsuarioSesion = $('#idUsuarioSesion').val();
+         location.href = "/SuperAdministradorVentasSeguimientoDetalleTickets?ticketVenta=" + idTicket_ + "&idUsuario=" + idUsuarioSesion + "";
+      }
+
+      function asignarUsuarioSeguimiento(idTicket_) {
+
+         var idUsuarioSesion = $('#idUsuarioSesion').val();
+
+         var cadena = $('#cargoUsuarioSesion').val();
+         var pat = /VENDEDOR/;
+
+         if (pat.test(cadena) == false) {
+            toastr.warning('No tienes los permisos suficientes para pertenecer al ticket', 'Gestión Ticket');
+         } else {
+            io.socket.post('/usuario_ticket_venta/addUsers', {
+               idUsuario: idUsuarioSesion,
+               idTicketVenta: idTicket_
+            }, function(resData, jwRes) {
+
+               if (jwRes.statusCode == 201) {
+
+                  toastr.success('Has sido Asignado al Ticket Exitosamente', 'Gestión Ticket');
+
+                  location.href = "/SuperAdministradorVentasSeguimientoDetalleTickets?ticketVenta=" + idTicket_ + "&idUsuario=" + idUsuarioSesion + "";
+
+               } else if (jwRes.statusCode == 200) {
+                  toastr.warning('Ya perteneces al Ticket de Venta', 'Gestión Ticket');
+               } else {
+                  toastr.error('Error al Asignar al Ticket', 'Gestión Ticket');
+               }
+            });
+         }
+
+      }
+
+      function finalizarTicket(idTicket_, fechaApertura_) {
+
+         var cadena = $('#cargoUsuarioSesion').val();
+         var pat = /VENDEDOR/;
+         if (pat.test(cadena) == false) {
+            toastr.warning('No tienes los permisos suficientes para pertenecer al ticket', 'Gestión Ticket');
+            $('#myModal5').modal('toggle');
+         } else {
+            $('#idTicketFinalizar').val(idTicket_);
+            $('#fechaAperturaTicketFinalizar').val(fechaApertura_);
+
+            $('#descripcionTicket').val('');
+            $('#precioTicket').val('');
+
+         }
+
+      }
+
+      function calcularFechaFinalEnSegundos(fechaInicio, fechaFin) {
+
+         var inicio = new Date(fechaInicio);
+         var fin = new Date(fechaFin);
+
+         var diferencia = ((inicio - fin) / 1000);
+         var segundosTotales = String(diferencia);
+         var total = segundosTotales.replace('-', '');
+
+         return total;
+
+      }
+
+      function calcularFechaFinalEnFormatoHora(seconds) {
+         var numdays = Math.floor(seconds / 86400);
+         var numhours = Math.floor((seconds % 86400) / 3600);
+         var numminutes = Math.floor(((seconds % 86400) % 3600) / 60);
+         var numseconds = ((seconds % 86400) % 3600) % 60;
+
+         if (numhours < 10) {
+            numhours = '0' + numhours
+         }
+         if (numminutes < 10) {
+            numminutes = '0' + numminutes
+         }
+         if (numseconds < 10) {
+            numseconds = '0' + numseconds
+         }
+
+         return numdays + " Día/s " + numhours + ":" + numminutes + ":" + numseconds;
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

@@ -1,0 +1,615 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                     <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+                  </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                        <span class="block m-t-xs">
+                           <strong class="font-bold">Administrador</strong>
+                        </span>
+                        <span class="text-muted text-xs block">
+                           <%= req.session.me.nombre %>
+                           <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                           <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuario"
+                              style="display: none">
+                           <b class="caret"></b>
+                        </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/GloblalPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li class="active">
+                  <a href="/SuperAdministradorInicio" class="active">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorConsultas">
+                     <i class="fa fa-search"></i>
+                     <span class="nav-label">Consultas</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="/SuperAdministradorCostos">
+                     <i class="fa fa-money"></i>
+                     <span class="nav-label">Costos</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorReporteMensual">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorReporteTicket">
+                           <i class="fa fa-ticket"></i>Informes Tickets</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-diamond"></i>
+                     <span class="nav-label">Staff</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorCargo">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorUsuarios">
+                           <i class="fa fa-diamond"></i>Staff</a>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                     <%= req.session.me.nombre %>
+                  </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Inicio</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Inicio</a>
+                  </li>
+                  <li class="active">
+                     <strong>Resumen</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+               <div class="title-action">
+
+               </div>
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content">
+
+            <div class="row" id="resumenGlobal">
+               <div class="col-lg-3">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <span class="label label-default pull-right">Globlal</span>
+                        <h5>Ventas Pendientes</h5>
+                     </div>
+                     <div class="ibox-content">
+                        <h1 class="no-margins" id="ventaPendienteGloblal">0</h1>
+                        <div class="stat-percent font-bold text-defult" id="ventaPendientePorcentajeGloblal">
+                           <i class="fa fa-level-up"></i>
+                        </div>
+                        <small>Total Pendientes</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <span class="label label-danger pull-right">Globlal</span>
+                        <h5>Ventas No Contretadas</h5>
+                     </div>
+                     <div class="ibox-content">
+                        <h1 class="no-margins" id="ventaNoConcretadaGloblal">0</h1>
+                        <div class="stat-percent font-bold text-danger" id="ventaNoConcretadaPorcentajeGloblal">
+                           <i class="fa fa-level-up"></i>
+                        </div>
+                        <small>Total No Concretadas</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <span class="label label-primary pull-right">Globlal</span>
+                        <h5>Ventas Concretadas</h5>
+                     </div>
+                     <div class="ibox-content">
+
+                        <div class="row">
+                           <div class="col-md-6">
+                              <h1 class="no-margins" id="ventaConcretadaGloblal">0</h1>
+
+                              <div class="row">
+                                 <div class="col-md-8">Total Ventas</div>
+                                 <div class="col-md-4">
+                                    <div class="font-bold text-navy" id="ventaConcretadaPorcentajeGloblal">
+                                       <i class="fa fa-level-up"></i>
+                                    </div>
+                                 </div>
+                              </div>
+
+                           </div>
+                           <div class="col-md-6">
+                              <h1 class="no-margins" id="ventaConcretadaCostoGloblal">0</h1>
+                              <div class="row">
+                                 <div class="col-md-8">Total Costo</div>
+                                 <div class="col-md-4">
+                                    <div class="font-bold text-navy">100%
+                                       <i class="fa fa-level-up"></i>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Gestión de Tickets en Función de los Usuarios</h5>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                           <div class="ibox float-e-margins">
+                              <div class="ibox-title">
+                                 <h5>Tickets Vigentes</h5>
+                              </div>
+                              <div class="ibox-content tablaScrooll">
+                                 <table class="table table-hover no-margins">
+                                    <thead>
+                                       <tr>
+                                          <th>Nombre</th>
+                                          <th>Prioridad</th>
+                                          <th>Estado</th>
+                                          <th>Total</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tbBodyVigente">
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="col-md-4">
+                           <div class="ibox float-e-margins">
+                              <div class="ibox-title">
+                                 <h5>Tickets Por Facturar</h5>
+                              </div>
+                              <div class="ibox-content tablaScrooll">
+                                 <table class="table table-hover no-margins">
+                                    <thead>
+                                       <tr>
+                                          <th>Nombre</th>
+                                          <th>Prioridad</th>
+                                          <th>Estado</th>
+                                          <th>Total</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tbBodyPorFacturar">
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="col-md-4">
+                           <div class="ibox float-e-margins">
+                              <div class="ibox-title">
+                                 <h5>Tickets Finalizados</h5>
+                              </div>
+                              <div class="ibox-content tablaScrooll">
+                                 <table class="table table-hover no-margins">
+                                    <thead>
+                                       <tr>
+                                          <th>Nombre</th>
+                                          <th>Prioridad</th>
+                                          <th>Estado</th>
+                                          <th>Total</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tbFinalizado">
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Gráfico Estado de Tickets | Anual</h5>
+                        <div class="pull-right">
+                           <div class="btn-group">
+                              <select id="anioGrafico" class="btn btn-xs btn-white">
+                              <option value="2020">2020</option>
+                              <option value="2021">2021</option>
+                              <option value="2022">2022</option>
+                              <option value="2023">2023</option>
+                           </select>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <!-- <div class="col-lg-9">
+<div class="btn-group">
+<button class="btn btn-xs btn-outline btn-default" type="button" id="pendiente">VIGENTE</button>
+<button class="btn btn-xs btn-outline btn-danger" type="button" id="noConcretada">FINALIZADO POR FACTURAR</button>
+<button class="btn btn-xs btn-outline btn-primary" type="button" id="concretada">FINALIZADO</button>
+</div>
+<div class="ibox-content" style="position: relative">
+<canvas id="lineChart" height="100"></canvas>
+</div>
+</div> -->
+                           <div class="col-lg-12">
+                              <h3>Resumen Anual</h3>
+                              <br>
+                              <ul class="stat-list" id="listaTicketsAnio">
+
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      $('.tablaScrooll').slimScroll({
+         height: '278px'
+      });
+
+      buscarNumeroTickets();
+      var anio = $('#anioGrafico').val();
+      buscarGraficoNumeroTickets(anio, "VIGENTE", 'rgba(163,163,163,0.2)', "rgba(163,163,163,0.7)", "rgba(92,92,92,1)", "4D4D4D");
+      buscarNumeroTicketsAnio(anio);
+      buscarListaTicketsUsuarios("VIGENTE", "tbBodyVigente");
+      buscarListaTicketsUsuarios("FINALIZADO POR FACTURAR", "tbBodyPorFacturar");
+      buscarListaTicketsUsuarios("FINALIZADO", "tbFinalizado");
+
+
+      $("#anioGrafico").click(function() {
+         var anio = $('#anioGrafico').val();
+         buscarGraficoNumeroTickets(anio, "VIGENTE", 'rgba(163,163,163,0.2)', "rgba(163,163,163,0.7)", "rgba(92,92,92,1)", "4D4D4D");
+         buscarNumeroTicketsAnio(anio);
+      });
+
+      $("#pendiente").click(function() {
+         var anio = $('#anioGrafico').val();
+         buscarGraficoNumeroTickets(anio, "VIGENTE", 'rgba(163,163,163,0.2)', "rgba(163,163,163,0.7)", "rgba(92,92,92,1)", "4D4D4D");
+         buscarNumeroTicketsAnio(anio);
+      });
+
+      $("#noConcretada").click(function() {
+         var anio = $('#anioGrafico').val();
+         buscarGraficoNumeroTickets(anio, "FINALIZADO POR FACTURAR", 'rgba(255,82,82,0.2)', "rgba(255,82,82,0.7)", "rgba(255,60,60,1)", "F53232");
+         buscarNumeroTicketsAnio(anio);
+      });
+
+      $("#concretada").click(function() {
+         var anio = $('#anioGrafico').val();
+         buscarGraficoNumeroTickets(anio, "FINALIZADO", 'rgba(26,179,148,0.2)', "rgba(26,179,148,0.7)", "rgba(7,161,130,1)", "00A080");
+         buscarNumeroTicketsAnio(anio);
+      });
+
+
+      function buscarNumeroTickets() {
+
+         io.socket.post('/ticket/searchNumeroTicketsInicio', {
+            anio: ''
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var numeros = 0;
+               for (var i = 0; i < resData.length; i++) {
+                  numeros += (resData[i].numero);
+               }
+
+               var sumaTotalNumeros = numeros;
+
+               var htmlOut = '';
+               var color = '';
+               var colorPorcentaje = '';
+
+               for (var i = 0; i < resData.length; i++) {
+
+                  if (resData[i].estado == 'VIGENTE') {
+                     color = 'default';
+                     colorPorcentaje = 'default';
+                  } else if (resData[i].estado == 'FINALIZADO POR FACTURAR') {
+                     color = 'danger';
+                     colorPorcentaje = 'danger';
+                  } else if (resData[i].estado == 'FINALIZADO') {
+                     color = 'primary';
+                     colorPorcentaje = 'navy';
+                  } else {
+                     color = 'default';
+                     colorPorcentaje = 'default';
+                  }
+
+                  htmlOut +=
+                     '<div class="col-lg-4">' +
+                     '<div class="ibox float-e-margins">' +
+                     '<div class="ibox-title">' +
+                     '<span class="label label-' + color + ' pull-right">Globlal</span>' +
+                     '<h5>' + resData[i].estado + '</h5>' +
+                     '</div>' +
+                     '<div class="ibox-content">' +
+                     '<h1 class="no-margins" id="ventaPendienteGloblal">' + resData[i].numero + '</h1>' +
+                     '<div class="stat-percent font-bold text-' + colorPorcentaje + '" id="ventaPendientePorcentajeGloblal">' + Math.round((resData[i].numero * 100) / sumaTotalNumeros) + '% ' +
+                     '<i class="fa fa-level-up"></i>' +
+                     '</div>' +
+                     '<small>TOTAL ' + resData[i].estado + '</small>' +
+                     '</div>' +
+                     '</div>' +
+                     '</div>';
+
+               }
+
+               $('#resumenGlobal').empty();
+               $('#resumenGlobal').append(htmlOut);
+
+            } else {
+               toastr.error('Error al buscar numero de tickets', 'Gestión Inicio Tickets');
+            }
+         });
+
+      }
+
+      function buscarGraficoNumeroTickets(anio, estado, backgroundColor_, borderColor_, pointBackgroundColor_, pointBorderColor_) {
+
+         io.socket.post('/ticket/searchGraficoNumeroTicketsInicio', {
+            anio: anio,
+            estado: estado
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var labels = [];
+               var data = [];
+
+               for (var i = 0; i < resData.length; i++) {
+                  labels.push(resData[i].mes);
+                  data.push(resData[i].numero);
+               }
+
+               var lineData = {
+                  labels: labels,
+                  datasets: [
+
+                     {
+                        label: "" + estado + "",
+                        backgroundColor: '' + backgroundColor_ + '',
+                        borderColor: "" + borderColor_ + "",
+                        pointBackgroundColor: "" + pointBackgroundColor_ + "",
+                        pointBorderColor: "#" + pointBorderColor_ + "",
+                        data: data
+                     }
+                  ]
+               };
+
+               var lineOptions = {
+                  responsive: true
+               };
+
+               var myNewChart1;
+
+               if (window.myNewChart1 != null) {
+                  window.myNewChart1.destroy();
+               }
+
+               var ctx = document.getElementById("lineChart").getContext("2d");
+               window.myNewChart1 = new Chart(ctx, {
+                  type: 'line',
+                  data: lineData,
+                  options: lineOptions
+               });
+
+
+            } else {
+               toastr.error('Error al buscar gráfico numero de tickets', 'Gestión Inicio Tickets');
+            }
+         });
+      }
+
+
+      function buscarNumeroTicketsAnio(anio) {
+
+         io.socket.post('/ticket/searchNumeroTicketsInicio', {
+            anio: '  WHERE YEAR(ticket.fechaApertura) = ' + anio + '  '
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var numeros = 0;
+               for (var i = 0; i < resData.length; i++) {
+                  numeros += (resData[i].numero);
+               }
+               var sumaTotalNumeros = numeros;
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+                  htmlOut +=
+                     '<li>' +
+                     '<h2 class="no-margins" id="ventasConcretadasGrafico">' + resData[i].numero + '</h2>' +
+                     '<small>' + resData[i].estado + ' | Año</small>' +
+                     '<div class="stat-percent" id="ventasPorcentajeConcretadasGrafico">' + Math.round((resData[i].numero * 100) / sumaTotalNumeros) + '%' +
+                     '<i class="fa fa-level-up text-navy"></i>' +
+                     '</div>' +
+                     '<div class="progress progress-mini" id="ventasPorcentajeBarraConcretadasGrafico">' +
+                     '<div style="width: ' + Math.round((resData[i].numero * 100) / sumaTotalNumeros) + '%;" class="progress-bar"></div>' +
+                     '</div>' +
+                     '</li>';
+
+               }
+
+               $('#listaTicketsAnio').empty();
+               $('#listaTicketsAnio').append(htmlOut);
+
+            } else {
+               toastr.error('Error al buscar numero de tickets', 'Gestión Inicio Tickets');
+            }
+         });
+
+      }
+
+      function buscarListaTicketsUsuarios(estado, tabla) {
+
+         io.socket.post('/ticket/searchListaTicketsUsuarios', {
+            estado: estado
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var htmlOut = '';
+               for (var i = 0; i < resData.length; i++) {
+
+                  var prioridad = '';
+
+                  if (resData[i].prioridad == 'ALTA') {
+                     prioridad = 'danger';
+                  } else if (resData[i].prioridad == 'MEDIA') {
+                     prioridad = 'warning';
+                  } else if (resData[i].prioridad == 'BAJA') {
+                     prioridad = 'primary';
+                  }
+
+
+                  htmlOut +=
+                     '<tr>' +
+                     '<td>' +
+                     '' + resData[i].nombre + '' +
+                     '</td>' +
+                     '<td>' +
+                     '<small>' +
+                     '<span class="label label-' + prioridad + '">' + resData[i].prioridad + '</span>' +
+                     '</small>' +
+                     '</td>' +
+                     '<td>' +
+                     '<small>' +
+                     '<span class="label label-default">' + resData[i].estado + '</span>' +
+                     '</small>' +
+                     '</td>' +
+                     '<td>' + resData[i].numero + '</td>' +
+                     '</tr>';
+
+               }
+
+               $('#' + tabla + '').empty();
+               $('#' + tabla + '').append(htmlOut);
+
+            } else {
+               toastr.error('Error al buscar numero de tickets', 'Gestión Inicio Tickets');
+            }
+         });
+
+      }
+
+
+      Array.prototype.unique = function(a) {
+         return function() {
+            return this.filter(a)
+         }
+      }(function(a, b, c) {
+         return c.indexOf(a, b + 1) < 0
+      });
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>

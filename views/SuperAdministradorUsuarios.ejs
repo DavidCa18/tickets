@@ -1,0 +1,573 @@
+<% if (req.session.me) { %>
+   <style>
+      .k-grid tbody tr {
+         height: 45px;
+      }
+   </style>
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Administrador</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/GloblalPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorInicio" class="active">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorConsultas">
+                     <i class="fa fa-search"></i>
+                     <span class="nav-label">Consultas</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="/SuperAdministradorCostos">
+                     <i class="fa fa-money"></i>
+                     <span class="nav-label">Costos</span>
+                  </a>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorReporteMensual">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorReporteTicket">
+                           <i class="fa fa-ticket"></i>Informes Tickets</a>
+                     </li>
+                  </ul>
+               </li>
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-diamond"></i>
+                     <span class="nav-label">Staff</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorCargo">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li class="active">
+                        <a href="/SuperAdministradorUsuarios">
+                           <i class="fa fa-diamond"></i>Staff</a>
+                     </li>
+                  </ul>
+               </li>
+
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Staff</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="">Staff</a>
+                  </li>
+                  <li class="active">
+                     <strong>Registro Staff</strong>
+                  </li>
+               </ol>
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="ibox float-e-margins">
+                     <div class="ibox-title">
+                        <h5>Gestión Staff</h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active">
+                                       <a data-toggle="tab" href="#tab-1" style="color: black"> Gestión Usuarios |
+                            <small style="color: gray">En el siguiente módulo se realizará la gestión de los usuarios.</small>
+                          </a>
+                                    </li>
+                                    <li class="">
+                                       <a data-toggle="tab" href="#tab-2" style="color: black">Gestión Usuarios - Cargo |
+                            <small style="color: gray">En el siguiente módulo se realizará la asignación de uno o varios cargos a los usuarios.</small>
+                          </a>
+                                    </li>
+                                 </ul>
+                                 <div class="tab-content">
+                                    <div id="tab-1" class="tab-pane active">
+                                       <div class="panel-body">
+                                          <div id="usuariosLista"></div>
+                                       </div>
+                                    </div>
+                                    <div id="tab-2" class="tab-pane">
+                                       <div class="panel-body">
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <button class="btn btn-success" data-toggle="modal" data-target="#myModal6">
+                                    <i class="fa fa-suitcase"></i> Asignar Cargos</button>
+                                                </div>
+                                             </div>
+                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                   <h4 style="color: black">Lista de Usuarios con Cargo Asignado</h4>
+                                                   <small>Si un usuario no existe en la lista, no tiene un cargo asignado.</small>
+                                                   <div id="usuariosCargos"></div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+
+                              </div>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+
+      <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+                  <h4 class="modal-title">Asignar Cargos a un Usuario</h4>
+               </div>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+
+                           <div class="list-group">
+                              <a href="#" class="list-group-item list-group-item-success active">
+                      Lista de Usuarios |
+                      <small>Seleccionar un usuario para ser asignado</small>
+                    </a>
+                              <div id="listaUsuarios">
+
+                              </div>
+                           </div>
+
+                        </div>
+                     </div>
+
+                     <div class="col-md-6">
+                        <div class="form-group">
+
+                           <div class="list-group">
+                              <a href="#" class="list-group-item" style="background: #23C6C8; color: white">
+                      Lista de Cargos |
+                      <small>Seleccionar un cargo para ser asignado a un usuario</small>
+                    </a>
+                              <div id="listaCargos">
+
+                              </div>
+                           </div>
+
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" id="guardarCargo">Guadar</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+         buscarUsuarios();
+         buscarUsuariosCargos();
+
+         buscarUsuariosLista();
+         buscarCargosLista();
+
+         $("#guardarCargo").click(function() {
+
+            var usuarios = $('input[name=usuarios]:checked').val();
+            var cargos = $('input[name=cargos]:checked').val();
+
+            if (usuarios == undefined) {
+               toastr.error('Seleccionar un Usuario', 'Gestión Usuario');
+            } else if (cargos == undefined) {
+               toastr.error('Seleccionar un Cargo', 'Gestión Usuario');
+            } else {
+               guardarCargoUsuario();
+            }
+
+         });
+
+         function guardarCargoUsuario() {
+
+            var usuarios = $('input[name=usuarios]:checked').val();
+            var cargos = $('input[name=cargos]:checked').val();
+
+            io.socket.post('/cargo_usuario/save', {
+               idUsuario: usuarios,
+               idCargo: cargos
+            }, function(resData, jwRes) {
+
+               if (jwRes.statusCode == 201) {
+                  toastr.success('Usuario Asignado al Cargo Exitosamente', 'Gestión Usuario');
+                  $('#myModal6').modal('toggle');
+                  buscarUsuariosCargos();
+               } else if (jwRes.statusCode == 404) {
+                  toastr.warning('El usuario ya pertenece al cargo seleccionado', 'Gestión Usuario');
+               } else {
+                  toastr.error('Error al asignar el cargo al usuario', 'Gestión Usuario');
+                  $('#myModal6').modal('toggle');
+               }
+
+            });
+
+         }
+
+         function buscarUsuariosLista() {
+            io.socket.get('/usuario', function(resData, jwres) {
+
+               if (jwres.statusCode == 200) {
+
+                  if (resData.length >= 1) {
+                     var htmlOut = '';
+                     for (var i = 0; i < resData.length; i++) {
+                        htmlOut +=
+                           '<a href="#" class="list-group-item">' +
+                           '<div class="radio radio-success">' +
+                           '<input type="radio" name="usuarios" id="usuario' + resData[i].idUsuario + '" value="' + resData[i].idUsuario + '">' +
+                           '<label for="usuario' + resData[i].idUsuario + '">' +
+                           '' + resData[i].nombre + '' +
+                           '</label>' +
+                           '</div>' +
+                           '</a>';
+                     }
+
+                     $('#listaUsuarios').empty();
+                     $('#listaUsuarios').append(htmlOut);
+                  }
+
+               }
+
+            });
+         }
+
+         function buscarCargosLista() {
+            io.socket.get('/cargo', function(resData, jwres) {
+
+               if (jwres.statusCode == 200) {
+
+                  if (resData.length >= 1) {
+                     var htmlOut = '';
+                     for (var i = 0; i < resData.length; i++) {
+                        htmlOut +=
+                           '<a href="#" class="list-group-item">' +
+                           '<div class="radio radio-info">' +
+                           '<input type="radio" name="cargos" id="cargo' + resData[i].idCargo + '" value="' + resData[i].idCargo + '">' +
+                           '<label for="cargo' + resData[i].idCargo + '">' +
+                           '' + resData[i].nombre + '' +
+                           '</label>' +
+                           '</div>' +
+                           '</a>';
+                     }
+
+                     $('#listaCargos').empty();
+                     $('#listaCargos').append(htmlOut);
+                  }
+
+               }
+
+            });
+         }
+
+         function buscarUsuariosCargos() {
+
+            dataSource = new kendo.data.DataSource({
+               transport: {
+                  read: {
+                     url: "/usuario/searchUsuariosCargos",
+                     dataType: "json"
+                  },
+                  parameterMap: function(options, operation) {
+                     if (operation !== "read" && options.models) {
+                        var datos = options.models[0];
+                        return datos;
+                     }
+                  }
+               },
+               error: function(e) {
+                  toastr.error(JSON.stringify(e), 'Error al realizar la transacción del Cargo Usuarios');
+                  console.log(JSON.stringify(e));
+               },
+               batch: true,
+               pageSize: 10,
+               requestEnd: function(e) {
+                  if (e.type != 'read') {
+                     e.sender.read();
+                  }
+               },
+               schema: {
+                  model: {
+                     id: "idUsuario",
+                     fields: {
+                        nombre: {
+                           validation: {
+                              required: true
+                           }
+                        },
+                        correo: {
+                           validation: {
+                              required: true
+                           }
+                        },
+                        rol: {
+                           validation: {
+                              required: true
+                           }
+                        },
+                        cargo: {
+                           validation: {
+                              required: true
+                           }
+                        }
+                     }
+                  }
+               }
+            });
+
+
+            $("#usuariosCargos").kendoGrid({
+               dataSource: dataSource,
+               pageable: {
+                  refresh: true,
+                  pageSizes: true,
+                  buttonCount: 5
+               },
+               height: 430,
+               columns: [{
+                  field: "nombre",
+                  title: "Nombre Staff",
+                  width: "150px",
+                  height: "500px"
+               }, {
+                  field: "correo",
+                  title: "Correo Electrónico",
+                  width: "150px",
+                  height: "500px"
+               }, {
+                  field: "rol",
+                  title: "Rol",
+                  width: "150px",
+                  height: "500px"
+               }, {
+                  field: "cargo",
+                  title: "Cargo/s",
+                  width: "150px",
+                  height: "500px"
+               }]
+            });
+
+         }
+
+
+         function buscarUsuarios() {
+            var rols = [{
+               "value": "ADMINISTRADOR",
+               "text": "ADMINISTRADOR"
+            }, {
+               "value": "USUARIO",
+               "text": "USUARIO"
+            }]
+
+
+            dataSource = new kendo.data.DataSource({
+               transport: {
+                  read: {
+                     url: "/usuario/search",
+                     dataType: "json"
+                  },
+                  update: {
+                     url: "/usuario/update",
+                     dataType: "json"
+                  },
+                  destroy: {
+                     url: "/usuario/delete",
+                     dataType: "json"
+                  },
+                  create: {
+                     url: "/usuario/save",
+                     dataType: "json"
+                  },
+                  parameterMap: function(options, operation) {
+                     if (operation !== "read" && options.models) {
+                        var datos = options.models[0];
+                        return datos;
+                     }
+                  }
+               },
+               error: function(e) {
+                  toastr.error(JSON.stringify(e), 'Error al realizar la transacción del Empleado');
+                  console.log(JSON.stringify(e));
+               },
+               batch: true,
+               pageSize: 10,
+               requestEnd: function(e) {
+                  if (e.type != 'read') {
+                     e.sender.read();
+                  }
+               },
+               schema: {
+                  model: {
+                     id: "idUsuario",
+                     fields: {
+                        nombre: {
+                           validation: {
+                              required: true
+                           }
+                        },
+                        correo: {
+                           validation: {
+                              required: true
+                           }
+                        },
+                        rol: {
+                           validation: {
+                              required: true
+                           }
+                        }
+                     }
+                  }
+               }
+            });
+
+
+            $("#usuariosLista").kendoGrid({
+               dataSource: dataSource,
+               pageable: {
+                  refresh: true,
+                  pageSizes: true,
+                  buttonCount: 5
+               },
+               height: 400,
+               toolbar: ["create"],
+               columns: [{
+                  field: "nombre",
+                  title: "Nombre Staff",
+                  width: "150px"
+               }, {
+                  field: "correo",
+                  title: "Correo Electrónico",
+                  width: "150px"
+               }, {
+                  field: "rol",
+                  values: rols,
+                  title: "Rol",
+                  width: "150px"
+               }, {
+                  command: ["edit", "destroy"],
+                  title: "&nbsp;",
+                  width: "150px"
+               }],
+               editable: "popup"
+            });
+         }
+      </script>
+      <% } else { %>
+         <script>
+            location.replace('/');
+         </script>
+         <% } %>

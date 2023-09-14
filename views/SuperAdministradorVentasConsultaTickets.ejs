@@ -1,0 +1,874 @@
+<% if (req.session.me) { %>
+
+   <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+         <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+               <li class="nav-header">
+                  <div class="dropdown profile-element">
+                     <span>
+                <img alt="image" class="img-circle" src="logo.png" width="30%" height="10%" />
+              </span>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                  <span class="block m-t-xs">
+                    <strong class="font-bold">Usuario</strong>
+                  </span>
+                        <span class="text-muted text-xs block">
+                    <%= req.session.me.nombre %>
+                      <input type="text" value="<%= req.session.me.nombre %>" id="creador" style="display: none">
+                      <input type="text" value="<%= req.session.me.idUsuario %>" id="idUsuarioSesion" style="display: none">
+                      <b class="caret"></b>
+                  </span>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li>
+                           <a href="/SuperAdministradorVentasPerfil?user=<%= req.session.me.idUsuario %>">Perfil</a>
+                        </li>
+                        <li>
+                           <a href="usuario/logout">Cerrar Sesión </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="logo-element">
+                     IN+
+                  </div>
+               </li>
+               <li>
+                  <a href="/SuperAdministradorVentasInicio">
+                     <i class="fa fa-area-chart"></i>
+                     <span class="nav-label">Inicio</span>
+                  </a>
+               </li>
+               <li class="active">
+                  <a href="">
+                     <i class="fa fa-ticket"></i>
+                     <span class="nav-label">Ticket Venta</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasTicket">
+                           <i class="fa fa-ticket"></i>Ticket</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasSeguimientoTickets">
+                           <i class="fa fa-list-alt"></i>Seguimientos</a>
+                     </li>
+                     <li class="active">
+                        <a href="/SuperAdministradorVentasConsultaTickets">
+                           <i class="fa fa-search"></i>Consultas</a>
+                     </li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="">
+                     <i class="fa fa-file"></i>
+                     <span class="nav-label">Reportes</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTickets">
+                           <i class="fa fa-ticket"></i>Informe Tickets</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasReportesTicketsTiempo">
+                           <i class="fa fa-clock-o"></i>Reportes Fecha</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-gears"></i>
+                     <span class="nav-label">Gestión</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCliente">
+                           <i class="fa fa-id-badge"></i>Clientes</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasProducto">
+                           <i class="fa fa-shopping-cart"></i>Productos</a>
+                     </li>
+                  </ul>
+               </li>
+
+               <li>
+                  <a href="">
+                     <i class="fa fa-users"></i>
+                     <span class="nav-label">Usuarios</span>
+                     <span class="fa arrow"></span>
+                  </a>
+                  <ul class="nav nav-second-level collapse">
+                     <li>
+                        <a href="/SuperAdministradorVentasCargos">
+                           <i class="fa fa-suitcase"></i>Cargos</a>
+                     </li>
+                     <li>
+                        <a href="/SuperAdministradorVentasUsuarios">
+                           <i class="fa fa-users"></i>Usuarios</a>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+
+         </div>
+      </nav>
+
+      <div id="page-wrapper" class="gray-bg">
+         <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+               <div class="navbar-header">
+                  <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+                     <i class="fa fa-bars"></i>
+                  </a>
+               </div>
+               <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                     <span class="m-r-sm text-muted welcome-message">Bienvenido
+                <%= req.session.me.nombre %>
+              </span>
+                  </li>
+
+                  <li>
+                     <a href="usuario/logout">
+                        <i class="fa fa-sign-out"></i> Cerrar Sesión
+                     </a>
+                  </li>
+               </ul>
+
+            </nav>
+         </div>
+         <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+               <h2>Ticket Venta</h2>
+               <ol class="breadcrumb">
+                  <li>
+                     <a href="index.html">Ticket</a>
+                  </li>
+                  <li class="active">
+                     <strong>Consultas</strong>
+                  </li>
+               </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+         </div>
+
+         <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="ibox">
+                     <div class="ibox-title">
+                        <h5>Gestión Consulta Tickets | <small>El siguiente módulo le permitira realizar consultas de los tickets existentes por varios parametros.</small></h5>
+                        <div class="ibox-tools">
+                           <a class="collapse-link">
+                              <i class="fa fa-chevron-up"></i>
+                           </a>
+                           <a class="close-link">
+                              <i class="fa fa-times"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="ibox-content">
+                        <div class="row">
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Código</label>
+                                 <input id="codigo" class="form-control" style="width: 100%;" placeholder="Buscar Código" />
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Asunto</label>
+                                 <input type="text" placeholder="Buscar Asunto" class="form-control" id="asunto">
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Estado Ticket</label>
+                                 <select id="estado" class="form-control" multiple>
+                        <option value="VENTA PENDIENTE">VENTA PENDIENTE</option>
+                        <option value="VENTA NO CONCRETADA">VENTA NO CONCRETADA</option>
+                        <option value="VENTA CONCRETADA">VENTA CONCRETADA</option>
+                      </select>
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Usuarios</label>
+                                 <input type="text" placeholder="Buscar Usuarios" class="form-control" id="usuarios">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Cliente</label>
+                                 <input id="cliente" class="form-control" style="width: 100%;" placeholder="Buscar Cliente" />
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>Producto</label>
+                                 <input type="text" placeholder="Buscar Producto" class="form-control" id="producto">
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group" id="data_5">
+                                 <label>Rango Fecha Apertura</label>
+                                 <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="start" id="fechaInicio" placeholder="Fecha Inicio" style="height: 35px">
+                                    <span class="input-group-addon">Hasta</span>
+                                    <input type="text" class="input-sm form-control" name="end" id="fechaFin" placeholder="Fecha Final" style="height: 35px">
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-lg-3 col-md-3 col-sm-12">
+                              <div class="form-group">
+                                 <label>&nbsp;</label>
+                                 <br>
+                                 <button type="submit" class="btn btn-info" id="btnBuscar" style="width: 100%">
+                        <i class="fa fa-search"></i> Buscar</button>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row" style="background: white">
+                           <br>
+                           <div class="col-md-12" id="panBusqueda" style="display: none">
+
+                              <div class="table-responsive">
+                                 <table id="tableTickets" class="table table-bordered" border="1" width="100%" cellspacing="4" cellpadding="4">
+                                    <thead>
+                                       <tr>
+                                          <th style="background: #1D84C6; color: white">ID</th>
+                                          <th style="background: #1D84C6; color: white">Código</th>
+                                          <th style="background: #1D84C6; color: white">Asunto</th>
+                                          <th style="background: #1D84C6; color: white">Estado</th>
+                                          <th style="background: #1D84C6; color: white">Fecha Apertura</th>
+                                          <th style="background: #1D84C6; color: white">Fecha Cierre</th>
+                                          <th style="background: #1D84C6; color: white">Duración Venta</th>
+                                          <th style="background: #1D84C6; color: white">Cliente/s</th>
+                                          <th style="background: #1D84C6; color: white">Producto</th>
+                                          <th style="background: #1D84C6; color: white">Usuario/s</th>
+                                          <th style="background: #1D84C6; color: white">Seguimientos</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tbBodyTicket">
+                                       <tr>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-lg-12" id="panIncidencia" style="display: none">
+                              <div class="ibox">
+                                 <div class="ibox-title">
+                                    <h5>Resultados de la Búsqueda</h5>
+                                    <div class="ibox-tools">
+                                       <a class="collapse-link">
+                                          <i class="fa fa-chevron-up"></i>
+                                       </a>
+                                       <a class="close-link">
+                                          <i class="fa fa-times"></i>
+                                       </a>
+                                    </div>
+                                 </div>
+
+                                 <div class="ibox-content" style="background: white;">
+
+                                    <div class="row">
+                                       <div class="col-lg-12">
+                                          <div class="m-b-md">
+                                             <h2 style="text-align: center; font-weight: bold" id="codigoTitulo">VENTA </dd>
+                                             </h2>
+                                          </div>
+                                          <dl class="dl-horizontal">
+                                             <input type="text" style="display: none" id="idTicket" value="0" />
+                                             <dt>Asunto:</dt>
+                                             <dd id="asuntoR"></dd>
+                                             <dt>Estado:</dt>
+                                             <dd id="estadoR"></dd>
+                                          </dl>
+                                       </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                       <div class="col-lg-5 col-xs-5">
+                                          <dl class="dl-horizontal">
+
+                                             <dt>
+                                <u style="font-size: 14px; color: black">TICKET</u>
+                              </dt>
+                                             <dd>&nbsp;</dd>
+                                             <dt>&nbsp;</dt>
+                                             <dd>&nbsp;</dd>
+
+                                             <dt>Creado Por:</dt>
+                                             <dd id="creadorR"></dd>
+                                             <dt>N° Ticket:</dt>
+                                             <dd id="codigoR"> </dd>
+                                             <dt>Usuario/s Involucrado/s</dt>
+                                             <dd id="staffR"></dd>
+                                          </dl>
+                                       </div>
+                                       <div class="col-lg-7 col-xs-7">
+                                          <dl class="dl-horizontal">
+
+                                             <dt>
+                                <u style="color: white">TICKET</u>
+                              </dt>
+                                             <dd>&nbsp;</dd>
+                                             <dt>&nbsp;</dt>
+                                             <dd>&nbsp;</dd>
+
+                                             <dt>Fecha Apertura:</dt>
+                                             <dd id="fechaAperturaR"> </dd>
+                                             <dt>Fecha Cierre:</dt>
+                                             <dd id="fechaCierreR"> </dd>
+                                             <dt>Duración Venta:</dt>
+                                             <dd id="horasTotalesR"></dd>
+                                          </dl>
+                                       </div>
+                                    </div>
+
+                                    <div class="row">
+                                       <div class="col-lg-12">
+                                          <dl class="dl-horizontal">
+
+                                             <dt>
+                                <u style="font-size: 14px; color: black">CLIENTE</u>
+                              </dt>
+                                             <dd>&nbsp;</dd>
+                                             <dt>&nbsp;</dt>
+                                             <dd>&nbsp;</dd>
+
+                                             <dt>Empresa:</dt>
+                                             <dd id="empresaR"></dd>
+                                             <dt>Nombre/s:</dt>
+                                             <dd id="clientesR"> </dd>
+                                             <dt>Télefono:</dt>
+                                             <dd id="telefonoR"> </dd>
+                                             <dt>Correo Electrónico:</dt>
+                                             <dd id="emailR"> </dd>
+                                          </dl>
+                                       </div>
+                                    </div>
+
+                                    <div class="row">
+                                       <div class="col-lg-12" id="cluster_info">
+                                          <dl class="dl-horizontal">
+
+                                             <dt>
+                                <u style="font-size: 14px; color: black">PRODUCTO</u>
+                              </dt>
+                                             <dd>&nbsp;</dd>
+                                             <dt>&nbsp;</dt>
+                                             <dd>&nbsp;</dd>
+
+                                             <dt>Nombre:</dt>
+                                             <dd id="nombreR"></dd>
+                                          </dl>
+                                       </div>
+                                    </div>
+
+                                    <div class="row">
+                                       <div class="col-lg-12" id="cluster_info">
+                                          <dl class="dl-horizontal">
+                                             <dt>Costo Total:</dt>
+                                             <dd id="costoR"></dd>
+                                             <dt>Descripción Venta:</dt>
+                                             <dd id="descripcionR"></dd>
+                                          </dl>
+                                       </div>
+                                    </div>
+
+                                    <h2 style="text-align: center; font-weight: bold">Seguimiento Ticket</h2>
+                                    <hr>
+
+                                    <div class="row" id="seguimientoR">
+                                    </div>
+
+                                 </div>
+                              </div>
+                           </div>
+                           <br>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="footer">
+            <div>
+               <strong>Innovacloud </strong> Ticketing &copy; 2020 - 2021
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      $('#estado').multiselect('destroy');
+      $('#estado').multiselect({
+         includeSelectAllOption: true,
+         enableFiltering: true,
+         buttonWidth: '100%',
+         maxHeight: 280
+      });
+
+      $('#data_5 .input-daterange').datepicker({
+         format: 'yyyy-mm-dd',
+         keyboardNavigation: false,
+         forceParse: false,
+         autoclose: true
+      });
+
+      $("#btnBuscar").click(function() {
+
+         $("#panIncidencia").css("display", "none");
+         $("#panBusqueda").css("display", "block");
+         buscarTicketsVentas();
+      });
+
+      buscarCodigosTicket();
+      buscarClientesTicket();
+      buscarUsuariosTicket();
+      buscarProductosTicket();
+
+
+      function buscarCodigosTicket() {
+         $("#codigo").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/ticket_venta/searchCodigosTicket",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "codigo",
+            dataValueField: "idTicketVenta",
+            placeholder: "Buscar Código",
+            minLength: 1,
+         });
+      }
+
+      function buscarClientesTicket() {
+         $("#cliente").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/ticket_venta/searchClientesTicket",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "empresa",
+            dataValueField: "idClienteVenta",
+            placeholder: "Buscar Cliente",
+            minLength: 1,
+         });
+      }
+
+      function buscarUsuariosTicket() {
+         $("#usuarios").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/usuario",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "nombre",
+            dataValueField: "idUsuario",
+            placeholder: "Buscar Usuario",
+            minLength: 1,
+         });
+      }
+
+      function buscarProductosTicket() {
+         $("#producto").kendoComboBox({
+            dataSource: {
+               transport: {
+                  read: {
+                     url: "/producto_venta",
+                     dataType: "json"
+                  }
+               }
+            },
+            filter: "contains",
+            dataTextField: "nombre",
+            dataValueField: "idProductoVenta",
+            placeholder: "Buscar Usuario",
+            minLength: 1,
+         });
+      }
+
+      function buscarTicketsVentas() {
+
+         var consulta = '';
+         var parametro = '';
+
+         var codigo = $('#codigo').val();
+         var asunto = $('#asunto').val();
+         var estado = $('#estado').val();
+         var usuarios = $('#usuarios').val();
+         var cliente = $('#cliente').val();
+         console.log(cliente);
+         var producto = $('#producto').val();
+         var fechaInicio = $('#fechaInicio').val();
+         var fechaFin = $('#fechaFin').val();
+
+         var asignado = $('#creador').val();
+
+         if (codigo.length != 0) {
+            consulta += ('ticket_venta.idTicketVenta LIKE "%' + codigo + '%" AND ');
+         }
+         if (asunto.length != 0) {
+            consulta += ('ticket_venta.asunto LIKE "%' + asunto + '%" AND ');
+         }
+
+         if (estado.length != 0) {
+            var estadoConcat = '';
+            for (var i = 0; i < estado.length; i++) {
+               estadoConcat += 'ticket_venta.estado LIKE "%' + estado[i] + '%" OR ';
+            }
+            consulta += '(' + (estadoConcat.substr(0, (estadoConcat.length - 3))) + ') AND ';
+         }
+
+         if (usuarios.length != 0) {
+            consulta += (
+               '(SELECT ' +
+               'GROUP_CONCAT(usuario.idUsuario) ' +
+               'FROM ' +
+               'usuario_ticket_venta ' +
+               'INNER JOIN usuario ON usuario_ticket_venta.idUsuario = usuario.idUsuario ' +
+               'WHERE ' +
+               'usuario_ticket_venta.idTicketVenta = ticket_venta.idTicketVenta) LIKE "%' + usuarios + '%" AND ');
+         }
+
+         if (producto.length != 0) {
+            consulta += ('producto_venta.idProductoVenta LIKE "%' + producto + '%" AND ');
+         }
+
+         if (cliente.length != 0) {
+            consulta += (
+               '(SELECT ' +
+               'GROUP_CONCAT(cliente_venta.idClienteVenta) ' +
+               'FROM ' +
+               'cliente_ticket_venta ' +
+               'INNER JOIN cliente_venta ON cliente_ticket_venta.idClienteVenta = cliente_venta.idClienteVenta ' +
+               'WHERE ' +
+               'cliente_ticket_venta.idTicketVenta = ticket_venta.idTicketVenta) LIKE "%' + cliente + '%" AND ');
+         }
+
+         if (fechaInicio.length != 0 && fechaFin.length != 0) {
+            consulta += ('DATE(ticket_venta.fechaApertura) >= "' + fechaInicio + '" && DATE(ticket_venta.fechaApertura) <= "' + fechaFin + '" AND ');
+         }
+         //console.log(consulta.substr(0, (consulta.length - 4)));
+
+         if (consulta.substr(0, (consulta.length - 4)) == "") {
+            parametro = 1;
+         } else {
+            parametro = 2;
+         }
+
+         io.socket.post('/ticket_venta/searchTicketVentaBusqueda', {
+            sql: consulta.substr(0, (consulta.length - 4)),
+            parametro: parametro
+         }, function(resData, jwres) {
+
+            if (jwres.statusCode == 201) {
+
+               var options = {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+               };
+
+               var table = $('#tableTickets').DataTable();
+               table.destroy();
+               $('#tableTickets').empty();
+               table = $('#tableTickets').DataTable({
+                  "ordering": false,
+                  pageLength: 8,
+                  responsive: true,
+                  dom: '<"html5buttons"B>lTfgitp',
+                  buttons: [{
+                     extend: 'copy'
+                  }, {
+                     extend: 'excel',
+                     title: 'Ticket-Venta'
+                  }, {
+                     extend: 'pdf',
+                     title: 'Ticket-Venta'
+                  }, ],
+                  data: resData,
+                  columns: [{
+                     data: 'idTicketVenta',
+                     title: "Id"
+                  }, {
+                     data: 'codigo',
+                     title: "Código"
+                  }, {
+                     data: 'asunto',
+                     title: "Asunto"
+                  }, {
+                     data: 'estado',
+                     title: "Estado"
+                  }, {
+                     data: 'fechaApertura',
+                     title: "Fecha Apertura",
+                     render: function(row, data, index) {
+                        var fechaApertura = new Date(row);
+                        return fechaApertura.toLocaleDateString("es-ES", options);
+                     }
+                  }, {
+                     data: 'fechaCierre',
+                     title: "Fecha Cierre",
+                     render: function(row, data, index) {
+                        var fechaAperturaValidacion = new Date(index.fechaApertura);
+                        var fechaCierreValidacion = new Date(row)
+                        var fechaCierre;
+
+                        if (fechaCierreValidacion.toLocaleDateString("es-ES", options) == fechaAperturaValidacion.toLocaleDateString("es-ES", options)) {
+                           fechaCierre = '';
+                        } else {
+                           fechaCierre = fechaCierreValidacion.toLocaleDateString("es-ES", options);
+                        }
+
+                        return fechaCierre;
+                     }
+                  }, {
+                     data: 'duracionVenta',
+                     title: "Duracion"
+                  }, {
+                     data: 'nombreCliente',
+                     title: "Cliente/s"
+                  }, {
+                     data: 'nombreProducto',
+                     title: "Producto"
+                  }, {
+                     data: 'usuarios',
+                     title: "Usuario/s"
+                  }],
+                  "columnDefs": [{
+                     "targets": [10],
+                     "data": null,
+                     "width": "1%",
+                     "defaultContent": "<button id='btnSeguimiento' class='btn btn-default'><i class='fa fa-th-list'></i> Incidencias</button>"
+                  }, {
+                     "targets": [0],
+                     "visible": false,
+                     "searchable": false
+                  }]
+               });
+
+               $('#tableTickets tbody').on('click', '#btnSeguimiento', function() {
+                  var data = table.row($(this).parents('tr')).data();
+                  buscarTicketDetalle(data.idTicketVenta);
+
+               });
+
+            }
+         });
+      }
+
+      function buscarTicketDetalle(ticket_venta_) {
+         $("#panIncidencia").css("display", "block");
+         $("#panBusqueda").css("display", "none");
+
+         io.socket.post('/ticket_venta/searchTicketVentaDocumentos', {
+            idTicketVenta: ticket_venta_
+         }, function(resData, jwRes) {
+
+            if (jwRes.statusCode == 201) {
+
+               var options = {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  second: 'numeric'
+               };
+               var fechaAperturaValidacion = new Date(resData.fechaApertura);
+               var fechaCierreValidacion = new Date(resData.fechaCierre);
+               var fechaApertura;
+               var fechaCierre;
+               var totalVenta = 'Sin Cerrar';
+               var costo = 'Sin Costo';
+
+               if (fechaAperturaValidacion.toLocaleDateString("es-ES", options) == '31 de diciembre de 1969 19:00:00') {
+                  fechaApertura = '';
+               } else {
+                  fechaApertura = fechaAperturaValidacion.toLocaleDateString("es-ES", options);
+               }
+
+               if (fechaCierreValidacion.toLocaleDateString("es-ES", options) == fechaAperturaValidacion.toLocaleDateString("es-ES", options)) {
+                  fechaCierre = 'Sin Cerrar';
+               } else {
+                  fechaCierre = fechaCierreValidacion.toLocaleDateString("es-ES", options);
+               }
+
+               if (resData.duracionVenta != null) {
+                  totalVenta = resData.duracionVenta;
+               }
+
+               if (resData.costo != null) {
+                  costo = resData.costo;
+               }
+
+               $('#codigoTitulo').empty();
+               $('#codigoTitulo').append('TICKET ' + resData.codigo);
+
+               $('#asuntoR').empty();
+               $('#asuntoR').append(resData.asunto);
+
+               $('#estadoR').empty();
+               $('#estadoR').append(resData.estado);
+
+               $('#creadorR').empty();
+               $('#creadorR').append(resData.nombreUsuario);
+
+               $('#codigoR').empty();
+               $('#codigoR').append(resData.codigo);
+
+               $('#staffR').empty();
+               $('#staffR').append(resData.usuarios);
+
+               $('#fechaAperturaR').empty();
+               $('#fechaAperturaR').append(fechaApertura);
+
+               $('#fechaCierreR').empty();
+               $('#fechaCierreR').append(fechaCierre);
+
+               $('#horasTotalesR').empty();
+               $('#horasTotalesR').append(totalVenta);
+
+               $('#empresaR').empty();
+               $('#empresaR').append(resData.empresaCliente);
+
+               $('#clientesR').empty();
+               $('#clientesR').append(resData.nombreCliente);
+
+               $('#telefonoR').empty();
+               $('#telefonoR').append(resData.telefonoCliente);
+
+               $('#emailR').empty();
+               $('#emailR').append(resData.correoCliente);
+
+               $('#nombreR').empty();
+               $('#nombreR').append(resData.nombreProducto);
+
+               $('#descripcionProductoR').empty();
+               $('#descripcionProductoR').append(resData.descripcionProducto);
+
+               $('#costoR').empty();
+               $('#costoR').append(costo);
+
+               $('#descripcionR').empty();
+               $('#descripcionR').append(resData.descripcion);
+
+               io.socket.get('/incidencias_venta?idTicketVenta=' + ticket_venta_ + '', function(resData, jwRes) {
+                  if (jwRes.statusCode == 200) {
+                     var htmlIncidencia = '';
+                     for (var i = 0; i < resData.length; i++) {
+
+                        var fecha = new Date(resData[i].fecha);
+
+                        htmlIncidencia += '<div class="col-md-12">' +
+                           '<table border="0">' +
+                           '<tr>' +
+                           '<td>' +
+                           '<dt>Responsable Incidencia:&nbsp;</dt>' +
+                           '</td>' +
+                           '<td >&nbsp;&nbsp;&nbsp;' + resData[i].nombreUsuario + '</td>' +
+                           '</tr>' +
+                           '<tr>' +
+                           '<td>' +
+                           '<dt>Inicio Incidencia:&nbsp;</dt>' +
+                           '</td>' +
+                           '<td>&nbsp;&nbsp;&nbsp;' + fecha.toLocaleDateString("es-ES", options) + '</td>' +
+                           '</tr>' +
+                           '<tr>' +
+                           '<td colspan="2">&nbsp;</td>' +
+                           '</tr>' +
+                           '</table>' +
+                           '<div class="well" style="font-size: 14px">' +
+                           '<div style="width: 100%">' + resData[i].descripcion + '</div>' +
+                           '<br><hr> Archivo/s' +
+                           '<br>' +
+                           '<br>' +
+                           '<div>' + obtenerArchivos(JSON.stringify(resData[i].archivos)) + '</div>' +
+                           '</div><hr>' +
+                           '</div>';
+                     }
+
+                     $('#seguimientoR').empty();
+                     $('#seguimientoR').append(htmlIncidencia);
+                  } else {
+                     toastr.error('Error al buscar el detalle del seguimiento del ticket', 'Gestión Búsqueda Ticket Venta');
+                  }
+               });
+
+            } else {
+               toastr.error('Error al buscar el detalle del ticket', 'Gestión Búsqueda Ticket Venta');
+            }
+         });
+      }
+
+      function obtenerArchivos(json) {
+
+         var retorno = '' + json;
+
+         var archivo = JSON.parse(json);
+         var htmlOut = '';
+         for (var i = 0; i < archivo.length; i++) {
+            htmlOut += '<a href="' + archivo[i].ubicacion + '" target="_blank" class="btn btn-default" style="font-size: 14px" ><i class="fa fa-file-archive-o"></i> ' + archivo[i].nombre + '</a>&nbsp;&nbsp;&nbsp;';
+
+         }
+
+         retorno = htmlOut;
+
+         return retorno;
+      }
+   </script>
+   <% } else { %>
+      <script>
+         location.replace('/');
+      </script>
+      <% } %>
